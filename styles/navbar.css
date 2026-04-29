@@ -1,0 +1,241 @@
+/* ═══════════════════════════════════════════════════════
+   NAVBAR (Minimalist Light Theme)
+   ═══════════════════════════════════════════════════════ */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--nav-height);
+  z-index: 1060;
+  transition: all var(--transition-base);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.navbar.scrolled {
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Very subtle line */
+}
+
+.navbar.menu-open {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom-color: transparent !important;
+}
+
+/* ── Navbar Layout ── */
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 1001;
+}
+
+.nav-logo img {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
+.navbar.scrolled .nav-logo img {
+  filter: brightness(0);
+}
+
+/* ── Central Navigation Links ── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.nav-links a {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-white);
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.nav-links a:hover {
+  opacity: 0.8;
+}
+
+.navbar.scrolled .nav-links a {
+  color: var(--color-gray-800);
+}
+
+/* ── Right Actions ── */
+.nav-actions {
+  display: flex;
+  align-items: center;
+}
+
+.btn-login {
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  color: var(--color-white);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.btn-login:hover {
+  filter: brightness(1.1);
+  color: var(--color-white);
+}
+
+.navbar.scrolled .btn-login {
+  color: var(--color-white);
+}
+
+/* ── Mobile Menu Toggle ── */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 1051;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--color-white);
+  border-radius: 2px;
+  transition: transform var(--transition-base), background var(--transition-fast), opacity var(--transition-base);
+  transform-origin: center;
+}
+
+.navbar.scrolled .nav-toggle span {
+  background: #000 !important;
+}
+
+.navbar.menu-open .nav-toggle span {
+  background: #000 !important; /* Dark cross on white background */
+}
+
+.navbar.menu-open .nav-logo {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none;
+}
+
+.nav-toggle.active span:nth-child(1) {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.nav-toggle.active span:nth-child(2) {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+/* ── Mobile Menu Overlay (Apple Style) ── */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #fbfbfd;
+  z-index: 1050;
+  opacity: 0;
+  pointer-events: none;
+  /* Base state (closing): wait 0.1s before fading overlay out */
+  transition: opacity 0.4s ease-in-out 0.1s;
+  display: flex;
+  flex-direction: column;
+  padding-top: calc(var(--nav-height) + 20px);
+}
+
+.mobile-menu-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+  /* Open state: overlay fades in immediately */
+  transition: opacity 0.4s ease-in-out 0s;
+}
+
+.mobile-menu-container {
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mobile-menu-container a {
+  font-family: var(--font-body);
+  font-size: 26px;
+  font-weight: 600;
+  color: #1d1d1f;
+  text-decoration: none;
+  /* Base state (closing) */
+  opacity: 0;
+  transform: translateY(12px);
+  /* Uses same duration as opening but ease-in, with reverse delays */
+  transition: opacity 0.4s ease-in, transform 0.4s ease-in, color 0.2s;
+}
+
+/* Base delays (closing): Bottom item starts first, top item last */
+.mobile-menu-container a:nth-child(1) { transition-delay: 0.20s; }
+.mobile-menu-container a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu-container a:nth-child(3) { transition-delay: 0.10s; }
+.mobile-menu-container a:nth-child(4) { transition-delay: 0.05s; }
+.mobile-menu-container a:nth-child(5) { transition-delay: 0s; }
+
+/* Open state */
+.mobile-menu-overlay.open .mobile-menu-container a {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s cubic-bezier(0.2, 0, 0, 1), transform 0.6s cubic-bezier(0.2, 0, 0, 1), color 0.2s;
+}
+
+/* Open delays: Top item starts first, bottom item last */
+.mobile-menu-overlay.open .mobile-menu-container a:nth-child(1) { transition-delay: 0.05s; }
+.mobile-menu-overlay.open .mobile-menu-container a:nth-child(2) { transition-delay: 0.1s; }
+.mobile-menu-overlay.open .mobile-menu-container a:nth-child(3) { transition-delay: 0.15s; }
+.mobile-menu-overlay.open .mobile-menu-container a:nth-child(4) { transition-delay: 0.2s; }
+.mobile-menu-overlay.open .mobile-menu-container a:nth-child(5) { transition-delay: 0.25s; }
+
+.mobile-menu-container a:hover {
+  color: var(--color-primary);
+}
+
+.btn-login-mobile {
+  color: var(--color-primary) !important;
+}
+
+/* ── Responsive adjustments ── */
+@media (max-width: 1024px) {
+  .nav-links {
+    gap: var(--space-4);
+  }
+  .nav-links a {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links, .nav-actions {
+    display: none;
+  }
+  
+  .nav-toggle {
+    display: flex;
+  }
+}

@@ -1,0 +1,236 @@
+/* ═══════════════════════════════════════════════════════
+   TESTIMONIALS — Apple-style horizontal card reel
+   ═══════════════════════════════════════════════════════ */
+
+.testimonials {
+  position: relative;
+  background: var(--surface-primary);
+}
+
+/* Scrollable wrapper */
+.testimonials-carousel-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  position: relative;
+  width: 100%;
+  margin-top: var(--space-12);
+  padding-bottom: var(--space-6);
+  /* Fade edges into the background */
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+/* Hide native scrollbar */
+.testimonials-carousel-wrapper::-webkit-scrollbar { display: none; }
+.testimonials-carousel-wrapper { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Track holds all cards in a row */
+.testimonials-track {
+  display: flex;
+  gap: var(--space-6);
+  width: max-content;
+  padding: 0 max(var(--space-6), calc((100vw - 1200px) / 2));
+}
+
+.testimonials-group {
+  display: flex;
+  gap: var(--space-6);
+}
+
+/* ── Card ── */
+.testimonial-card {
+  width: 380px;
+  min-height: 320px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  background: var(--color-gray-50, #f7f7f8);
+  border-radius: 20px;
+  padding: 36px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  cursor: grab;
+  /* Start dimmed and slightly scaled down */
+  opacity: 0.4;
+  transform: scale(0.95);
+  filter: saturate(0.5);
+  transition: opacity 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+              filter 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.testimonial-card.in-view {
+  opacity: 1;
+  transform: scale(1);
+  filter: saturate(1);
+}
+
+.testimonial-card.in-view:hover {
+  transform: scale(1) translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+.testimonial-card:active {
+  cursor: grabbing;
+}
+
+/* Stars */
+.tc-stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 20px;
+  color: var(--color-accent);
+}
+
+.tc-stars svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Quote text */
+.testimonial-card p {
+  font-size: 16px;
+  color: var(--color-gray-700);
+  line-height: 1.65;
+  margin-bottom: 28px;
+  flex: 1;
+}
+
+/* Author block */
+.tc-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.tc-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--color-white);
+  background: var(--color-primary);
+}
+
+.tc-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-black);
+  line-height: 1.3;
+}
+
+.tc-role {
+  font-size: 13px;
+  color: var(--color-gray-500);
+  margin-top: 2px;
+}
+
+/* ── Pagination Dots ── */
+.testimonials-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--space-10);
+  height: 24px;
+}
+
+.tc-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--color-gray-300);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.tc-dot.active {
+  width: 24px;
+  background: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .testimonials {
+    padding: var(--space-12) 0;
+  }
+
+  .testimonials-carousel-wrapper {
+    margin-top: var(--space-8);
+    scroll-snap-type: x mandatory;
+    /* Hide scrollbar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .testimonials-carousel-wrapper::-webkit-scrollbar { display: none; }
+
+  .testimonial-card {
+    width: 300px;
+    min-height: 260px;
+    padding: 24px 20px 20px;
+    border-radius: 16px;
+    scroll-snap-align: center;
+    /* All cards visible on mobile — no dim effect */
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .testimonial-card p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .tc-stars svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .tc-avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 12px;
+  }
+
+  .tc-name {
+    font-size: 14px;
+  }
+
+  .tc-role {
+    font-size: 12px;
+  }
+
+  .testimonials-track {
+    padding: 0 calc(50vw - 150px); /* Center first and last cards */
+    gap: 16px;
+  }
+
+  .testimonials-group {
+    gap: 16px;
+  }
+
+  /* Fluid dots — JS drives width/color */
+  .testimonials-dots {
+    margin-top: var(--space-8);
+  }
+
+  .tc-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--color-gray-300);
+  }
+}

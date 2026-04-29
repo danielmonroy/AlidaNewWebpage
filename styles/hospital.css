@@ -1,0 +1,243 @@
+/* ═══════════════════════════════════════════════════════
+   HOSPITAL EDITORIAL SECTION (Coral / Warm Theme)
+   ═══════════════════════════════════════════════════════ */
+
+.editorial-hospital {
+  position: relative;
+  background-color: var(--color-gray-50);
+  padding: var(--space-20) 0;
+}
+
+.editorial-hospital-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-12);
+  align-items: start;
+}
+
+/* ── Left Column: Dashboard & Features ── */
+.eh-col-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.eh-image-dashboard {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 40px;
+  overflow: hidden;
+  background-color: rgba(42, 157, 143, 0.1); /* Soft green background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eh-image-dashboard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.eh-features {
+  padding-right: var(--space-4);
+}
+
+.eh-features h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-6);
+  letter-spacing: -0.01em;
+}
+
+.eh-features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.eh-features li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-gray-700);
+}
+
+.eh-features li svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--color-accent); /* Green checkmark */
+  fill: currentColor;
+}
+
+/* ── Right Column: Header & Vertical Images ── */
+.eh-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-top: var(--space-10);
+}
+
+.eh-header {
+  margin-bottom: var(--space-4);
+}
+
+.eh-overline {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gray-500);
+  margin-bottom: var(--space-4);
+}
+
+.eh-header h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-gray-900);
+  max-width: 600px;
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.eh-images-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  align-items: end;
+}
+
+.eh-image-vertical-1 {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: var(--color-gray-200);
+}
+
+.eh-image-vertical-2 {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: var(--color-gray-200);
+  margin-bottom: var(--space-12); /* Push up to create asymmetrical look */
+}
+
+.eh-image-vertical-1 img,
+.eh-image-vertical-2 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.eh-content-bottom {
+  margin-top: var(--space-2);
+  max-width: 480px;
+}
+
+.eh-content-bottom h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--color-gray-900);
+  margin-bottom: var(--space-3);
+  letter-spacing: -0.01em;
+}
+
+.eh-content-bottom p {
+  font-size: var(--text-base);
+  color: var(--color-gray-500);
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .editorial-hospital-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  .eh-col-right {
+    padding-top: 0;
+  }
+
+  .eh-image-dashboard {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Swap order so header is on top on mobile */
+  .eh-col-left {
+    order: 2;
+  }
+  .eh-col-right {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .editorial-hospital {
+    padding: var(--space-12) 0;
+  }
+
+  .editorial-hospital-grid {
+    gap: var(--space-8);
+  }
+
+  .eh-image-dashboard {
+    border-radius: 20px;
+    max-width: 100%;
+  }
+
+  .eh-header h2 {
+    font-size: 32px;
+    line-height: 1.15;
+  }
+
+  .eh-features h3 {
+    font-size: 22px;
+  }
+
+  .eh-features li {
+    font-size: 16px;
+  }
+
+  .eh-images-grid {
+    gap: var(--space-3);
+  }
+
+  .eh-image-vertical-1,
+  .eh-image-vertical-2 {
+    border-radius: 20px;
+  }
+
+  .eh-image-vertical-2 {
+    margin-bottom: var(--space-6);
+  }
+
+  .eh-content-bottom h3 {
+    font-size: 22px;
+  }
+
+  .eh-content-bottom p {
+    font-size: 16px;
+  }
+}

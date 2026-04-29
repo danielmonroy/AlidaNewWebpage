@@ -1,0 +1,410 @@
+/* ═══════════════════════════════════════════════════════
+   HERO SECTION (MEDVi Dark Style)
+   ═══════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  background-color: #0E2041; /* Dark editorial blue */
+  padding-top: calc(var(--nav-height) + 60px);
+  padding-bottom: 240px; /* Ensures blue background projects behind the cards */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Watermark Logo Background */
+.hero-watermark {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+  width: 90vw;
+  max-width: 1400px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.04; /* Very low opacity to blend with background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-watermark img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+}
+
+.hero h1 {
+  font-family: var(--font-heading);
+  font-size: 80px; /* Massive typography */
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--color-white);
+  margin-bottom: var(--space-6);
+}
+
+.hero h1 span.text-light {
+  color: var(--color-accent);
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  font-weight: 400;
+  max-width: 650px;
+  margin: 0 auto var(--space-8) auto;
+}
+
+/* ── OVERLAPPING CARDS TRACK ── */
+.hero-cards-wrapper {
+  position: relative;
+  z-index: 10;
+  margin-top: -120px; /* Overlaps the blue hero */
+  padding-bottom: var(--space-12);
+  width: 100%;
+}
+
+.hero-cards-container {
+  background: var(--surface-primary);
+  border-radius: 40px 40px 0 0; /* Flat bottom to integrate */
+  padding: 40px 32px 32px 32px;
+  /* Box shadow removed to prevent vertical seam lines against the white background */
+  max-width: 1300px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Make the full-width white background start below the blue borders */
+.hero-cards-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 100px; /* Starts exactly where we want the white background to seamlessly connect */
+  left: 0;
+  width: 100%;
+  height: calc(100% - 100px);
+  background: var(--surface-primary);
+  z-index: 1;
+}
+
+.hero-cards-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  position: relative;
+  z-index: 3;
+}
+
+.hero-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.hero-card:hover {
+  transform: translateY(-4px);
+}
+
+.hero-card-img-wrapper {
+  width: 100%;
+  height: 160px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.hero-card-img-wrapper svg.card-icon {
+  width: 64px;
+  height: 64px;
+  stroke: var(--color-gray-700);
+  transition: transform var(--transition-base);
+}
+
+.hero-card:hover .hero-card-img-wrapper svg.card-icon {
+  transform: scale(1.1);
+}
+
+.hero-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.hero-card-footer span {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-gray-800);
+}
+
+.hero-card-footer svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-gray-800);
+  transition: transform 0.2s ease;
+}
+
+.hero-card:hover .hero-card-footer svg {
+  transform: translateX(4px);
+}
+
+/* ── TICKER (FEATURES) ── */
+.hero-ticker-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: var(--surface-primary);
+  padding: var(--space-6) 0 var(--space-12) 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.hero-ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 70s linear infinite;
+  -webkit-animation: ticker-scroll 70s linear infinite;
+}
+
+.ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 40px;
+}
+
+.ticker-item svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-gray-500);
+}
+
+.ticker-item span {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-gray-600);
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } 
+}
+
+@-webkit-keyframes ticker-scroll {
+  0% { -webkit-transform: translateX(0); }
+  100% { -webkit-transform: translateX(-50%); } 
+}
+
+
+/* ── HERO CARDS PAGINATION DOTS ── */
+.hero-cards-dots {
+  display: none; /* Hidden on desktop */
+}
+
+/* Responsive Hero */
+@media (max-width: 1024px) {
+  .hero h1 { font-size: 64px; }
+  .hero-watermark { font-size: 40vw; }
+  
+  .hero-cards-track {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: calc(var(--nav-height) + 40px);
+    padding-bottom: 160px;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+    padding: 0 28px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    padding: 0 28px;
+    line-height: 1.6;
+  }
+
+  .hero-badge {
+    font-size: 12px;
+    padding: 5px 14px;
+  }
+
+  .hero-watermark {
+    font-size: 50vw;
+  }
+
+  .hero-cards-wrapper {
+    margin-top: -100px;
+  }
+
+  .hero-cards-container {
+    border-radius: 28px 28px 0 0;
+    padding: 32px 28px 36px 28px;
+  }
+
+  .hero-cards-track {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    padding: 0 4px;
+    gap: 12px;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 16px;
+    align-items: stretch;
+    touch-action: pan-x;
+  }
+
+  .hero-card {
+    flex: 0 0 70%;
+    scroll-snap-align: center;
+    /* Remove reveal animation on mobile cards to prevent vertical jumping */
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hero-card:hover,
+  .hero-card:active,
+  .hero-card:focus {
+    transform: none !important;
+  }
+
+  .hero-card .hero-card-img-wrapper svg.card-icon {
+    transition: none;
+  }
+
+  .hero-card:hover .hero-card-img-wrapper svg.card-icon {
+    transform: none;
+  }
+
+  .hero-card:hover .hero-card-footer svg {
+    transform: none;
+  }
+
+  .hero-card-img-wrapper {
+    height: 120px;
+    border-radius: 16px;
+  }
+
+  .hero-card-footer {
+    justify-content: center;
+  }
+
+  .hero-card-footer svg {
+    display: none;
+  }
+
+  .hero-card-footer span {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .hero-actions .btn {
+    width: auto;
+    padding: 12px 28px;
+  }
+
+  /* Ticker mobile */
+  .hero-ticker-wrap {
+    padding: var(--space-4) 0 var(--space-8) 0;
+  }
+
+  .ticker-item {
+    padding: 0 24px;
+  }
+
+  .ticker-item span {
+    font-size: 11px;
+  }
+
+  .ticker-item svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Hide scrollbar on hero cards */
+  .hero-cards-track::-webkit-scrollbar { display: none; }
+  .hero-cards-track { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Pagination dots */
+  .hero-cards-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    height: 24px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .hero-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--color-gray-300);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .hero-dot.active {
+    width: 24px;
+    background: var(--color-primary);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 32px; }
+  .hero-subtitle { font-size: 14px; }
+
+  .hero-card {
+    flex: 0 0 75%;
+  }
+}
