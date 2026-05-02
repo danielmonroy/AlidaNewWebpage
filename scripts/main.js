@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initCtaForm();
   initCounterAnimation();
+  initUTMForwarding();
 });
 
 /* ── Navbar Scroll Effect ── */
@@ -286,3 +287,36 @@ window.addEventListener('scroll', () => {
     orb.style.transform = `translateY(${scrollY * speed}px)`;
   });
 }, { passive: true });
+
+/* ── UTM Parameter Forwarding ── */
+function initUTMForwarding() {
+  const urlParams = new URLSearchParams(window.location.search);
+  
+  if (Array.from(urlParams).length === 0) return;
+
+  const links = document.querySelectorAll('a');
+  links.forEach(link => {
+    try {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('javascript:') || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+
+      const linkUrl = new URL(link.href);
+      
+      if (linkUrl.protocol !== 'http:' && linkUrl.protocol !== 'https:') return;
+
+      let hasUtm = false;
+      for (const [key, value] of urlParams.entries()) {
+        if (!linkUrl.searchParams.has(key)) {
+          linkUrl.searchParams.set(key, value);
+          hasUtm = true;
+        }
+      }
+
+      if (hasUtm) {
+        link.href = linkUrl.toString();
+      }
+    } catch (e) {
+      // Silently ignore invalid URLs
+    }
+  });
+}
