@@ -89,6 +89,48 @@
   margin: 0 auto var(--space-8) auto;
 }
 
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .hero-actions {
+    flex-direction: row;
+    gap: var(--space-8);
+  }
+}
+
+.hero-action-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.hero-action-group p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.btn-outline-light {
+  background: transparent;
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
 /* ── OVERLAPPING CARDS TRACK ── */
 .hero-cards-wrapper {
   position: relative;
@@ -164,9 +206,10 @@
 
 .hero-card-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 0 8px;
+  text-align: center;
 }
 
 .hero-card-footer span {
@@ -175,16 +218,7 @@
   color: var(--color-gray-800);
 }
 
-.hero-card-footer svg {
-  width: 18px;
-  height: 18px;
-  color: var(--color-gray-800);
-  transition: transform 0.2s ease;
-}
 
-.hero-card:hover .hero-card-footer svg {
-  transform: translateX(4px);
-}
 
 /* ── TICKER (FEATURES) ── */
 .hero-ticker-wrap {
@@ -322,9 +356,7 @@
     transform: none;
   }
 
-  .hero-card:hover .hero-card-footer svg {
-    transform: none;
-  }
+
 
   .hero-card-img-wrapper {
     height: 120px;
@@ -335,9 +367,7 @@
     justify-content: center;
   }
 
-  .hero-card-footer svg {
-    display: none;
-  }
+
 
   .hero-card-footer span {
     font-size: 14px;
