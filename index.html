@@ -10,6 +10,73 @@
 
     gtag('config', 'G-CCYKGL0BZZ');
   </script>
+
+  <!-- PostHog frontend tracking -->
+  <!--
+    Pageview-only by design. Every other PostHog auto-capture source is
+    explicitly disabled (autocapture, pageleave, dead clicks, rageclick,
+    performance, heatmaps, session recording) so the only auto-event we
+    emit is $pageview. Mirrors the app's posture in Alida's
+    application.html.erb verbatim, with capture_pageview flipped on
+    because marketing pageviews ARE the signal we want here.
+
+    Project token is publishable client-side (phc_* prefix), same
+    posture as GA4's site tag above. Same project as the app — events
+    from both domains land on a single PostHog person once _ph_did is
+    unified across the domain hop (see cross-domain handler below).
+  -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_AycxJFviF6SDccscpKHqHQWipCxcqJRhVJU3EoXNssmj', {
+      api_host: 'https://us.i.posthog.com',
+      person_profiles: 'identified_only',
+      autocapture: false,
+      capture_pageview: true,
+      capture_pageleave: false,
+      capture_dead_clicks: false,
+      rageclick: false,
+      disable_session_recording: true,
+      capture_performance: false,
+      enable_heatmaps: false
+    });
+    posthog.register({ site: 'website', environment: 'production' });
+
+    // Cross-domain identity forwarding to app.alidahealth.com.
+    //
+    // alida.health and app.alidahealth.com are different eTLD+1s, so browser
+    // cookies do NOT share between them. We append the visitor's PostHog
+    // distinct_id and session_id to outbound app links at click time; the
+    // app's PostHog SDK reads them on landing and adopts the identity, so
+    // the visitor stays as one person + one session across the domain hop.
+    //
+    // Click time (rather than page load) because session_id is generated
+    // lazily on first event capture — reading it earlier returns null.
+    //
+    // Event delegation on document so dynamically-inserted links also work.
+    // Composes cleanly with initUTMForwarding (scripts/main.js): different
+    // params, different timing, no collision. Final outbound URL ends up
+    // like ?referral_code=ALIDAFREEPLAN&utm_source=...&_ph_did=...&_ph_sid=...
+    //
+    // Known minor edge case: middle-click fires `auxclick`, not `click`, so
+    // links opened in a new tab via middle-click won't carry the params.
+    // Acceptable — primary CTA path is left-click; returning users via
+    // middle-click are a thin slice we can revisit if signal matters.
+    document.addEventListener('click', function (e) {
+      var link = e.target && e.target.closest && e.target.closest('a[href*="app.alidahealth.com"]');
+      if (!link) return;
+      if (typeof posthog === 'undefined' || !posthog.get_distinct_id) return;
+      try {
+        var url = new URL(link.href);
+        var did = posthog.get_distinct_id();
+        var sid = posthog.get_session_id && posthog.get_session_id();
+        if (did && !url.searchParams.has('_ph_did')) url.searchParams.set('_ph_did', did);
+        if (sid && !url.searchParams.has('_ph_sid')) url.searchParams.set('_ph_sid', sid);
+        link.href = url.toString();
+      } catch (err) {
+        // Silently ignore invalid URLs — never block user navigation.
+      }
+    });
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alida Health</title>
