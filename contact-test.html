@@ -69,25 +69,28 @@
     //
     // alida.health and app.alidahealth.com are different eTLD+1s, so browser
     // cookies do NOT share between them. We append the visitor's PostHog
-    // distinct_id and session_id to outbound app links at click time; the
-    // app's PostHog SDK reads them on landing and adopts the identity, so
+    // distinct_id and session_id to outbound app links just before navigation;
+    // the app's PostHog SDK reads them on landing and adopts the identity, so
     // the visitor stays as one person + one session across the domain hop.
     //
-    // Click time (rather than page load) because session_id is generated
-    // lazily on first event capture — reading it earlier returns null.
+    // Not at page load: session_id is generated lazily on first event capture —
+    // reading it earlier returns null. By pointerdown/click, $pageview has
+    // already fired so both ids are available.
+    //
+    // pointerdown covers left-click, middle-click, and right-click "Open in
+    // new tab" (href is rewritten before the browser reads it). click covers
+    // keyboard activation (Enter/Space), which does not fire pointerdown.
+    // Both are idempotent — params are only set when missing.
     //
     // Event delegation on document so dynamically-inserted links also work.
     // Composes cleanly with initUTMForwarding (scripts/main.js): different
     // params, different timing, no collision. Final outbound URL ends up
     // like ?referral_code=ALIDAFREEPLAN&utm_source=...&_ph_did=...&_ph_sid=...
-    //
-    // Known minor edge case: middle-click fires `auxclick`, not `click`, so
-    // links opened in a new tab via middle-click won't carry the params.
-    // Acceptable — primary CTA path is left-click; returning users via
-    // middle-click are a thin slice we can revisit if signal matters.
-    document.addEventListener('click', function (e) {
-      var link = e.target && e.target.closest && e.target.closest('a[href*="app.alidahealth.com"]');
-      if (!link) return;
+    function findAppLink(e) {
+      return e.target && e.target.closest && e.target.closest('a[href*="app.alidahealth.com"]');
+    }
+
+    function appendPosthogIds(link) {
       if (typeof posthog === 'undefined' || !posthog.get_distinct_id) return;
       try {
         var url = new URL(link.href);
@@ -99,6 +102,16 @@
       } catch (err) {
         // Silently ignore invalid URLs — never block user navigation.
       }
+    }
+
+    document.addEventListener('pointerdown', function (e) {
+      var link = findAppLink(e);
+      if (link) appendPosthogIds(link);
+    });
+
+    document.addEventListener('click', function (e) {
+      var link = findAppLink(e);
+      if (link) appendPosthogIds(link);
     });
   </script>
   <title>[PRUEBA] Alida Health — Contact Test</title>
@@ -228,6 +241,7 @@
                     data-tf-popup="V2Njuf39"
                     data-tf-opacity="100"
                     data-tf-size="80"
+                    data-tf-auto-close="5000"
                     data-tf-iframe-props="title=Contacto Alida Health"
                     data-tf-transitive-search-params
                     data-tf-hidden="source=hero_cta,test_page=true"
@@ -776,6 +790,7 @@
                     data-tf-popup="V2Njuf39"
                     data-tf-opacity="100"
                     data-tf-size="80"
+                    data-tf-auto-close="5000"
                     data-tf-iframe-props="title=Contacto Alida Health"
                     data-tf-transitive-search-params
                     data-tf-hidden="source=pricing_empresa,test_page=true"
@@ -860,6 +875,7 @@
                     data-tf-popup="V2Njuf39"
                     data-tf-opacity="100"
                     data-tf-size="80"
+                    data-tf-auto-close="5000"
                     data-tf-iframe-props="title=Contacto Alida Health"
                     data-tf-transitive-search-params
                     data-tf-hidden="source=final_cta,test_page=true"
