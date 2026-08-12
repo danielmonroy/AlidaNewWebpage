@@ -43,37 +43,46 @@
     });
     posthog.register({ site: 'website', environment: 'production' });
 
+    // Typeform popup lifecycle → PostHog. Without this, staying on-page for
+    // the form loses the conversion signal that used to be "left for Typeform".
+    // Funnel: $pageview → typeform_opened → typeform_submitted.
+    window.addEventListener('message', function (e) {
+      if (typeof e.data !== 'string') return;
+      if (typeof posthog === 'undefined') return;
+      if (e.data.indexOf('form-ready') === 0) {
+        posthog.capture('typeform_opened', { form_id: 'V2Njuf39' });
+      }
+      if (e.data.indexOf('form-submit') === 0) {
+        posthog.capture('typeform_submitted', { form_id: 'V2Njuf39' });
+      }
+    });
+
     // Cross-domain identity forwarding to app.alidahealth.com.
     //
     // alida.health and app.alidahealth.com are different eTLD+1s, so browser
     // cookies do NOT share between them. We append the visitor's PostHog
-    // distinct_id and session_id to outbound app links at click time; the
-    // app's PostHog SDK reads them on landing and adopts the identity, so
+    // distinct_id and session_id to outbound app links just before navigation;
+    // the app's PostHog SDK reads them on landing and adopts the identity, so
     // the visitor stays as one person + one session across the domain hop.
     //
-    // Click time (rather than page load) because session_id is generated
-    // lazily on first event capture — reading it earlier returns null.
+    // Not at page load: session_id is generated lazily on first event capture —
+    // reading it earlier returns null. By pointerdown/click, $pageview has
+    // already fired so both ids are available.
+    //
+    // pointerdown covers left-click, middle-click, and right-click "Open in
+    // new tab" (href is rewritten before the browser reads it). click covers
+    // keyboard activation (Enter/Space), which does not fire pointerdown.
+    // Both are idempotent — params are only set when missing.
     //
     // Event delegation on document so dynamically-inserted links also work.
     // Composes cleanly with initUTMForwarding (scripts/main.js): different
     // params, different timing, no collision. Final outbound URL ends up
     // like ?referral_code=ALIDAFREEPLAN&utm_source=...&_ph_did=...&_ph_sid=...
-    //
-    // Known minor edge case: middle-click fires `auxclick`, not `click`, so
-    // links opened in a new tab via middle-click won't carry the params.
-    // Acceptable — primary CTA path is left-click; returning users via
-    // middle-click are a thin slice we can revisit if signal matters.
-    document.addEventListener('click', function (e) {
-      var link = e.target && e.target.closest && e.target.closest('a[href*="app.alidahealth.com"]');
-      if (!link) return;
+    function findAppLink(e) {
+      return e.target && e.target.closest && e.target.closest('a[href*="app.alidahealth.com"]');
+    }
 
-      // Meta Pixel: free-plan signup CTA clicks (hero, editorial, pricing).
-      if (link.href.indexOf('/users/sign_up') !== -1 && link.href.indexOf('ALIDAFREEPLAN') !== -1) {
-        if (typeof fbq === 'function') {
-          fbq('track', 'InitiateCheckout', { content_name: 'Plan Gratis - Clic CTA' });
-        }
-      }
-
+    function appendPosthogIds(link) {
       if (typeof posthog === 'undefined' || !posthog.get_distinct_id) return;
       try {
         var url = new URL(link.href);
@@ -85,6 +94,26 @@
       } catch (err) {
         // Silently ignore invalid URLs — never block user navigation.
       }
+    }
+
+    document.addEventListener('pointerdown', function (e) {
+      var link = findAppLink(e);
+      if (link) appendPosthogIds(link);
+    });
+
+    document.addEventListener('click', function (e) {
+      var link = findAppLink(e);
+      if (!link) return;
+
+      // Meta Pixel: free-plan signup CTA clicks (hero, editorial, pricing).
+      // Left-click / keyboard only — pointerdown already decorated the href.
+      if (link.href.indexOf('/users/sign_up') !== -1 && link.href.indexOf('ALIDAFREEPLAN') !== -1) {
+        if (typeof fbq === 'function') {
+          fbq('track', 'InitiateCheckout', { content_name: 'Plan Gratis - Clic CTA' });
+        }
+      }
+
+      appendPosthogIds(link);
     });
   </script>
 
@@ -126,6 +155,10 @@
   <link rel="stylesheet" href="styles/testimonials.css?v=9">
   <link rel="stylesheet" href="styles/pricing.css?v=10">
   <link rel="stylesheet" href="styles/cta.css?v=2">
+
+  <!-- Typeform popup embed -->
+  <link rel="stylesheet" href="//embed.typeform.com/next/css/popup.css">
+  <script src="//embed.typeform.com/next/embed.js" async></script>
 </head>
 <body>
 
@@ -190,7 +223,15 @@
           </div>
           <div class="hero-action-group">
             <p>¿Necesitas más información?</p>
-            <a href="https://bnho4mjq36p.typeform.com/to/V2Njuf39" class="btn btn-outline-light btn-lg">Ponte en contacto con nosotros</a>
+            <button type="button"
+                    data-tf-popup="V2Njuf39"
+                    data-tf-opacity="100"
+                    data-tf-size="80"
+                    data-tf-iframe-props="title=Contacto Alida Health"
+                    data-tf-transitive-search-params
+                    data-tf-hidden="source=hero_cta"
+                    data-tf-medium="snippet"
+                    class="btn btn-outline-light btn-lg">Ponte en contacto con nosotros</button>
           </div>
         </div>
       </div>
@@ -730,7 +771,15 @@
               <div class="pricing-feature"><span class="pf-check blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Portal de pacientes</div>
               <div class="pricing-feature"><span class="pf-check blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Auditoría</div>
             </div>
-            <a href="https://bnho4mjq36p.typeform.com/to/V2Njuf39" class="btn btn-primary">Hablar con Ventas</a>
+            <button type="button"
+                    data-tf-popup="V2Njuf39"
+                    data-tf-opacity="100"
+                    data-tf-size="80"
+                    data-tf-iframe-props="title=Contacto Alida Health"
+                    data-tf-transitive-search-params
+                    data-tf-hidden="source=pricing_empresa"
+                    data-tf-medium="snippet"
+                    class="btn btn-primary">Hablar con Ventas</button>
           </div>
         </div>
       </div>
@@ -806,9 +855,17 @@
           <p class="reveal reveal-delay-2">Agenda una demo personalizada y descubre cómo Alida Health puede optimizar tu consultorio, clínica u hospital.</p>
 
           <div class="cta-form reveal reveal-delay-3">
-            <a href="https://bnho4mjq36p.typeform.com/to/V2Njuf39" class="btn btn-primary" id="ctaButton">
+            <button type="button"
+                    data-tf-popup="V2Njuf39"
+                    data-tf-opacity="100"
+                    data-tf-size="80"
+                    data-tf-iframe-props="title=Contacto Alida Health"
+                    data-tf-transitive-search-params
+                    data-tf-hidden="source=final_cta"
+                    data-tf-medium="snippet"
+                    class="btn btn-primary">
               Solicitar Demo
-            </a>
+            </button>
           </div>
 
           <p class="cta-disclaimer reveal reveal-delay-4">Te contactamos en menos de 24 horas.</p>
