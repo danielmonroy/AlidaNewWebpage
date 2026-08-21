@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+  # TEMPORARY: deploy WIP PRs to production S3/CloudFront. Remove after cutover.
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 permissions:
   contents: read
