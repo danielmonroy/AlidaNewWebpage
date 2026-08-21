@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprende a usar Alida | Alida Health</title>
+  <meta name="description" content="Aprende a usar Alida en unos minutos. Videos para el consultorio: agenda, expediente, receta y más.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="../assets/favicon-new.png">
+  <link rel="stylesheet" href="../styles/index.css">
+  <link rel="stylesheet" href="../styles/navbar.css?v=11">
+  <link rel="stylesheet" href="../styles/hero.css?v=2">
+  <link rel="stylesheet" href="../styles/cta.css?v=2">
+  <link rel="stylesheet" href="aprende.css">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="../index.html" class="nav-logo">
+        <img src="../assets/alida-logo-new.png" alt="Alida Health" />
+      </a>
+      <div class="nav-links">
+        <a href="../index.html#features">Consulta</a>
+        <a href="../index.html#benefits">Clínica / Hospital</a>
+        <a href="../index.html#testimonials">Testimonios</a>
+        <a href="../index.html#pricing">Precios</a>
+      </div>
+      <div class="nav-actions">
+        <a href="https://app.alidahealth.com/users/sign_in" class="btn btn-outline btn-login">Ingresa a tu cuenta</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu-overlay" id="mobileMenu">
+    <div class="mobile-menu-container">
+      <a href="https://app.alidahealth.com/users/sign_in" class="btn-login-mobile">Ingresa a tu cuenta</a>
+      <a href="../index.html#oftalmologia-premium">Consulta</a>
+        <a href="../index.html#benefits">Clínica / Hospital</a>
+      <a href="../index.html#testimonials">Testimonios</a>
+      <a href="../index.html#pricing">Precios</a>
+    </div>
+  </div>
+
+  <section class="hero section ayuda-hero" id="hero">
+    <div class="hero-watermark">
+      <img src="../assets/alida-logo-new.png" alt="" />
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <h1>Aprende a usar Alida.<br><span class="text-light">En unos minutos.</span></h1>
+        <p class="hero-subtitle">Aprende a usar Alida con videos cortos y prácticos.</p>
+        <div class="ayuda-search">
+          <svg class="ayuda-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="M20 20l-3-3"></path>
+          </svg>
+          <input id="ayudaSearch" type="search" placeholder="Busca cómo agendar, crear una receta, registrar…" autocomplete="off">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hero-cards-wrapper ayuda-sheet">
+    <div class="hero-cards-container">
+      <div id="aprendeBrowse">
+        <section class="ayuda-block">
+          <div class="ayuda-grid" id="aprendePopular"></div>
+        </section>
+        <!-- Explora por tema: keep markup + JS, hide until we have enough videos to browse by category. -->
+        <section class="ayuda-block" id="aprendeTopicsBlock" hidden>
+          <h2>Explora por tema</h2>
+          <div class="ayuda-topics" id="aprendeTopics"></div>
+          <div class="ayuda-grid" id="aprendeTopicGrid" hidden></div>
+        </section>
+      </div>
+      <div id="aprendeResults" hidden>
+        <div class="ayuda-grid" id="aprendeSearchGrid"></div>
+        <p class="ayuda-empty" id="ayudaEmpty">No hay un video con eso. Prueba con agenda, expediente o receta.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="../assets/alida-logo-footer.png" alt="Alida Health" style="height: 32px; width: auto; max-width: 240px; display: block;" />
+          </div>
+          <p>Software especializado 100% en oftalmología. Diseñado por oftalmólogos, para oftalmólogos.</p>
+          <div class="footer-social">
+            <a href="https://www.linkedin.com/company/alida-health/" aria-label="LinkedIn" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/alida.health/" aria-label="Instagram" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="../index.html#features">Consulta</a></li>
+            <li><a href="../index.html#benefits">Clínica / Hospital</a></li>
+            <li><a href="../index.html#testimonials">Testimonios</a></li>
+            <li><a href="../index.html#pricing">Precios</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Alida Health. Todos los derechos reservados.</p>
+        <div class="footer-bottom-links">
+          <a href="../privacy.html">Aviso de Privacidad</a>
+          <a href="../terms.html">Términos y Condiciones</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../scripts/main.js?v=7"></script>
+  <script src="catalog.js"></script>
+  <script src="aprende.js"></script>
+  <script>
+    AlidaAprende.initIndex(ALIDA_APRENDE_VIDEOS, ALIDA_APRENDE_TOPICS);
+  </script>
+</body>
+</html>
