@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft — first campaign landing. Copy matches the “Publicidad Plan Gratuito” flyers. Not linked from the homepage. Not launched.
+Draft — first campaign landing. Copy matches the “Publicidad Plan Gratuito” flyers. Not linked from the homepage. Not launched. This page is the source of truth for landing structure; copy later experiments from here, not from retired drafts.
 
 ## Launch Date
 
