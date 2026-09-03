@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Empieza tu práctica de oftalmología | Alida</title>
+  <meta name="description" content="Sistema de gestión de consultorio diseñado para oftalmólogos. Empieza gratis: hasta 20 consultas al mes, sin tarjeta de crédito.">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCYKGL0BZZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CCYKGL0BZZ');
+  </script>
+
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_AycxJFviF6SDccscpKHqHQWipCxcqJRhVJU3EoXNssmj', {
+      api_host: 'https://us.i.posthog.com',
+      person_profiles: 'identified_only',
+      autocapture: false,
+      capture_pageview: true,
+      capture_pageleave: false,
+      capture_dead_clicks: false,
+      rageclick: false,
+      disable_session_recording: true,
+      capture_performance: false,
+      enable_heatmaps: false
+    });
+
+    window.alidaExperiment = {
+      id: "exp-002",
+      slug: "empieza-hoy",
+      hypothesis: "start-practice-ally"
+    };
+    posthog.register({
+      site: 'website',
+      environment: 'production',
+      landing: 'empieza-hoy',
+      experiment_id: window.alidaExperiment.id,
+      experiment_slug: window.alidaExperiment.slug,
+      experiment_hypothesis: window.alidaExperiment.hypothesis
+    });
+
+    function findAppLink(e) {
+      return e.target && e.target.closest && e.target.closest('a[href*="app.alidahealth.com"]');
+    }
+    function appendPosthogIds(link) {
+      if (typeof posthog === 'undefined' || !posthog.get_distinct_id) return;
+      try {
+        var url = new URL(link.href);
+        var did = posthog.get_distinct_id();
+        var sid = posthog.get_session_id && posthog.get_session_id();
+        if (did && !url.searchParams.has('_ph_did')) url.searchParams.set('_ph_did', did);
+        if (sid && !url.searchParams.has('_ph_sid')) url.searchParams.set('_ph_sid', sid);
+        link.href = url.toString();
+      } catch (err) {}
+    }
+    document.addEventListener('pointerdown', function (e) {
+      var link = findAppLink(e);
+      if (link) appendPosthogIds(link);
+    });
+    document.addEventListener('click', function (e) {
+      var link = findAppLink(e);
+      if (link) appendPosthogIds(link);
+    });
+  </script>
+  <script src="../../scripts/signup-cta.js?v=1"></script>
+
+  <script>
+    (function () {
+      var PROD_HOSTS = ["alida.health", "www.alida.health", "app.alidahealth.com"];
+      if (PROD_HOSTS.indexOf(window.location.hostname) === -1) return;
+      var s = document.createElement('script');
+      s.src = '../../scripts/meta-pixel.js';
+      s.async = true;
+      document.head.appendChild(s);
+    })();
+  </script>
+
+  <link rel="icon" type="image/png" href="../../assets/favicon-new.png">
+  <link rel="stylesheet" href="../../styles/index.css">
+  <link rel="stylesheet" href="../../styles/navbar.css?v=11">
+  <link rel="stylesheet" href="../../styles/hero.css?v=2">
+  <link rel="stylesheet" href="../../styles/cta.css?v=2">
+  <link rel="stylesheet" href="lp.css">
+</head>
+<body>
+  <nav class="navbar lp-nav" id="navbar">
+    <div class="container">
+      <span class="nav-logo">
+        <img src="../../assets/alida-logo-new.png" alt="Alida Health" />
+      </span>
+      <div class="nav-actions">
+        <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN&landing=empieza-hoy" data-cta-placement="nav" data-landing="empieza-hoy" class="btn btn-primary">Empieza gratis</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero lp-hero section" id="hero">
+    <div class="container">
+      <div class="lp-hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge reveal">
+            <span class="badge-dot"></span>
+            Hecho específicamente para oftalmólogos
+          </div>
+          <h1 class="reveal reveal-delay-1">Todo lo que necesitas para empezar tu práctica de oftalmología.</h1>
+          <p class="hero-subtitle reveal reveal-delay-2">
+            El sistema de gestión de consultorio diseñado para oftalmólogos. Agenda, expediente clínico y recetas para empezar y operar tu práctica, sin complicaciones.
+          </p>
+          <div class="lp-hero-actions reveal reveal-delay-3">
+            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN&landing=empieza-hoy" data-cta-placement="hero" data-landing="empieza-hoy" class="btn btn-primary btn-lg">Empieza gratis</a>
+            <p class="lp-hero-note">Hasta 20 consultas al mes · Sin tarjeta de crédito</p>
+          </div>
+        </div>
+
+        <div class="lp-offer reveal reveal-delay-4">
+          <div class="lp-offer-card">
+            <span class="lp-offer-kicker">Plan gratuito</span>
+            <strong>Atiende a tus primeros pacientes sin pagar</strong>
+            <p>Hasta 20 consultas al mes, sin costo.</p>
+          </div>
+          <div class="lp-offer-card">
+            <span class="lp-offer-kicker">Tu equipo</span>
+            <strong>Trabaja con tus asistentes desde el primer día</strong>
+            <p>1 médico + 2 asistentes para operar tu práctica en equipo.</p>
+          </div>
+          <div class="lp-offer-card">
+            <span class="lp-offer-kicker">Acompañamiento</span>
+            <strong>Empieza con confianza</strong>
+            <p>Inducción y soporte para configurar tu sistema y comenzar a atender.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section" id="consulta">
+    <div class="container">
+      <h2>Todo lo que pasa en una consulta, en un solo lugar.</h2>
+      <p class="lp-lead">
+        Desde abrir la cita hasta documentar y generar la receta, todo ocurre en Alida.
+      </p>
+      <div class="lp-video">
+        <div class="lp-video-frame">
+          <!-- Temporary demo. Replace the YouTube id in the iframe src to swap the video. -->
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/YyX2eGRX7po"
+            title="Demostración de una consulta en Alida"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <p class="lp-video-caption">Una consulta completa, de la cita a la receta.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section lp-section-alt" id="testimonios">
+    <div class="container">
+      <h2>Lo que dicen nuestros doctores</h2>
+    </div>
+    <div class="lp-quotes" aria-label="Testimonios de oftalmólogos">
+      <div class="lp-quotes-track">
+        <div class="lp-quotes-group">
+          <article class="lp-quote-card">
+            <p>“Un excelente programa para oftalmólogos. Ayuda a optimizar tiempos en la consulta, llevar un expediente ordenado. También facilita la realización de la receta e interpretación de estudios.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">KG</span>
+              <div>
+                <strong>Dra. Karla Samara García Kronfeld</strong>
+                <span>Oftalmóloga · Colima, México</span>
+              </div>
+            </div>
+          </article>
+          <article class="lp-quote-card">
+            <p>“Alida se ha consolidado como la herramienta fundamental para la organización de la clínica, manteniendo las consultas ágiles y garantizando un flujo de trabajo rápido y eficiente.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">AB</span>
+              <div>
+                <strong>Dr. Armando Bautista Barba</strong>
+                <span>Oftalmólogo · Guadalajara, México</span>
+              </div>
+            </div>
+          </article>
+          <article class="lp-quote-card">
+            <p>“Alida ha transformado por completo mi consulta oftalmológica. Me permite organizar mi agenda, registrar y comparar exploraciones con citas previas, y actualizar fácilmente los cambios en cada consulta.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">AP</span>
+              <div>
+                <strong>Dra. Anahí Peimbert Franco</strong>
+                <span>Oftalmóloga · Ciudad de México, México</span>
+              </div>
+            </div>
+          </article>
+          <article class="lp-quote-card">
+            <p>“Llevo un tiempo usando Alida y ha sido una gran herramienta en mi práctica. Es fácil de usar, me permite ingresar datos, imágenes, estudios y programar cirugías. Lo mejor: puedo acceder a la información desde cualquier dispositivo.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">RF</span>
+              <div>
+                <strong>Dra. Rosa Isela Flores Lozano</strong>
+                <span>Oftalmóloga · Ciudad de México, México</span>
+              </div>
+            </div>
+          </article>
+          <article class="lp-quote-card">
+            <p>“La practicidad de Alida mejoró mis tiempos de consulta, la organización de mi agenda y la atención a mis pacientes. Lo recomiendo ampliamente.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">CB</span>
+              <div>
+                <strong>Dra. Carel Bustos Ampudia</strong>
+                <span>Oftalmóloga · Tijuana, México</span>
+              </div>
+            </div>
+          </article>
+          <article class="lp-quote-card">
+            <p>“Ahora todo en mi consulta es más ágil: organizo mi agenda, registro mis pacientes y genero recetas en segundos. Tener todo a la mano, desde cualquier lugar, me da una tranquilidad enorme.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">EG</span>
+              <div>
+                <strong>Dr. Edric González</strong>
+                <span>Oftalmólogo · Toluca, México</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="lp-quotes-group" aria-hidden="true">
+          <article class="lp-quote-card">
+            <p>“Un excelente programa para oftalmólogos. Ayuda a optimizar tiempos en la consulta, llevar un expediente ordenado. También facilita la realización de la receta e interpretación de estudios.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">KG</span>
+              <div>
+                <strong>Dra. Karla Samara García Kronfeld</strong>
+                <span>Oftalmóloga · Colima, México</span>
+              </div>
+            </div>
+          </article>
+          <article class="lp-quote-card">
+            <p>“Alida se ha consolidado como la herramienta fundamental para la organización de la clínica, manteniendo las consultas ágiles y garantizando un flujo de trabajo rápido y eficiente.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">AB</span>
+              <div>
+                <strong>Dr. Armando Bautista Barba</strong>
+                <span>Oftalmólogo · Guadalajara, México</span>
+              </div>
+            </div>
+          </article>
+          <article class="lp-quote-card">
+            <p>“Alida ha transformado por completo mi consulta oftalmológica. Me permite organizar mi agenda, registrar y comparar exploraciones con citas previas, y actualizar fácilmente los cambios en cada consulta.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">AP</span>
+              <div>
+                <strong>Dra. Anahí Peimbert Franco</strong>
+                <span>Oftalmóloga · Ciudad de México, México</span>
+              </div>
+            </div>
+          </article>
+          <article class="lp-quote-card">
+            <p>“Llevo un tiempo usando Alida y ha sido una gran herramienta en mi práctica. Es fácil de usar, me permite ingresar datos, imágenes, estudios y programar cirugías. Lo mejor: puedo acceder a la información desde cualquier dispositivo.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">RF</span>
+              <div>
+                <strong>Dra. Rosa Isela Flores Lozano</strong>
+                <span>Oftalmóloga · Ciudad de México, México</span>
+              </div>
+            </div>
+          </article>
+          <article class="lp-quote-card">
+            <p>“La practicidad de Alida mejoró mis tiempos de consulta, la organización de mi agenda y la atención a mis pacientes. Lo recomiendo ampliamente.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">CB</span>
+              <div>
+                <strong>Dra. Carel Bustos Ampudia</strong>
+                <span>Oftalmóloga · Tijuana, México</span>
+              </div>
+            </div>
+          </article>
+          <article class="lp-quote-card">
+            <p>“Ahora todo en mi consulta es más ágil: organizo mi agenda, registro mis pacientes y genero recetas en segundos. Tener todo a la mano, desde cualquier lugar, me da una tranquilidad enorme.”</p>
+            <div class="lp-quote-author">
+              <span class="lp-quote-avatar">EG</span>
+              <div>
+                <strong>Dr. Edric González</strong>
+                <span>Oftalmólogo · Toluca, México</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section" id="por-que-alida">
+    <div class="container">
+      <h2>Empieza a atender <span class="lp-accent">desde el primer día</span>.</h2>
+      <p class="lp-lead">
+        Alida reúne en un solo lugar lo que necesitas para atender, gestionar tu consulta y trabajar con tu equipo. Todo diseñado para oftalmología.
+      </p>
+      <div class="lp-reasons">
+        <article class="lp-reason">
+          <span class="lp-reason-kicker">01</span>
+          <h3>Empieza con todo organizado</h3>
+          <p>Agenda, expediente clínico y recetas viven en un solo lugar. Abres la cita, documentas la consulta y generas la receta sin cambiar de sistema.</p>
+        </article>
+        <article class="lp-reason">
+          <span class="lp-reason-kicker">02</span>
+          <h3>Trabaja con tu equipo desde el primer día</h3>
+          <p>Un médico y dos asistentes pueden operar la práctica juntos, cada uno con su propio rol. Todo en un mismo sistema.</p>
+        </article>
+        <article class="lp-reason">
+          <span class="lp-reason-kicker">03</span>
+          <h3>Hecho para oftalmología</h3>
+          <p>El flujo está diseñado para una consulta oftalmológica: exploraciones, estudios, imágenes, recetas y comparación con citas previas.</p>
+        </article>
+        <article class="lp-reason">
+          <span class="lp-reason-kicker">04</span>
+          <h3>Te acompañamos desde el inicio</h3>
+          <p>Te acompañamos para configurar tu sistema y comenzar a atender. No tienes que resolverlo todo por tu cuenta.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section lp-section-alt" id="faq">
+    <div class="container">
+      <h2>Antes de empezar, lo que necesitas saber.</h2>
+      <div class="lp-faq">
+        <details class="lp-faq-item">
+          <summary>¿El plan gratuito realmente es gratis?</summary>
+          <p>Sí. Puedes atender hasta 20 consultas al mes sin costo y sin tarjeta de crédito.</p>
+        </details>
+        <details class="lp-faq-item">
+          <summary>¿Qué incluye el plan gratuito?</summary>
+          <p>1 médico, 2 asistentes y hasta 20 consultas al mes. Agenda, expediente clínico y recetas para atender, con ese límite de volumen.</p>
+        </details>
+        <details class="lp-faq-item">
+          <summary>¿Puedo trabajar con mis asistentes?</summary>
+          <p>Sí. El plan gratuito incluye 1 médico y 2 asistentes, cada uno con su propio rol, en el mismo sistema.</p>
+        </details>
+        <details class="lp-faq-item">
+          <summary>¿Me ayudan a configurar Alida?</summary>
+          <p>Sí. Te acompañamos durante la configuración inicial y te ayudamos a dejar Alida listo para comenzar a atender.</p>
+        </details>
+        <details class="lp-faq-item">
+          <summary>¿Puedo cambiar de plan después?</summary>
+          <p>Sí. Si más adelante necesitas más consultas u otro plan, puedes cambiarte. No hay contratos a largo plazo.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section section" id="empezar">
+    <div class="container">
+      <div class="cta-wrapper">
+        <div class="cta-content">
+          <h2>Empieza hoy. <span class="lp-accent">Alida está contigo.</span></h2>
+          <p>Hasta 20 consultas al mes, sin costo. Sin tarjeta de crédito.</p>
+          <div class="cta-form">
+            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN&landing=empieza-hoy" data-cta-placement="footer" data-landing="empieza-hoy" class="btn btn-primary btn-lg">Empieza gratis</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer lp-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 Alida Health. Todos los derechos reservados.</p>
+        <div class="footer-bottom-links">
+          <a href="../../privacy.html">Aviso de Privacidad</a>
+          <a href="../../terms.html">Términos y Condiciones</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../scripts/main.js?v=7"></script>
+</body>
+</html>

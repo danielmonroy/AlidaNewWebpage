@@ -103,19 +103,10 @@
 
     document.addEventListener('click', function (e) {
       var link = findAppLink(e);
-      if (!link) return;
-
-      // Meta Pixel: free-plan signup CTA clicks (hero, editorial, pricing).
-      // Left-click / keyboard only — pointerdown already decorated the href.
-      if (link.href.indexOf('/users/sign_up') !== -1 && link.href.indexOf('ALIDAFREEPLAN') !== -1) {
-        if (typeof fbq === 'function') {
-          fbq('track', 'InitiateCheckout', { content_name: 'Plan Gratis - Clic CTA' });
-        }
-      }
-
-      appendPosthogIds(link);
+      if (link) appendPosthogIds(link);
     });
   </script>
+  <script src="scripts/signup-cta.js?v=1"></script>
 
   <!-- Meta Pixel Code (Only on production) -->
   <script>
@@ -219,7 +210,7 @@
         <div class="hero-actions reveal reveal-delay-3">
           <div class="hero-action-group">
             <p>¿Eres oftalmólogo?</p>
-            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" class="btn btn-primary btn-lg">Crea una cuenta gratuita</a>
+            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" data-cta-placement="hero" class="btn btn-primary btn-lg">Crea una cuenta gratuita</a>
           </div>
           <div class="hero-action-group">
             <p>¿Necesitas más información?</p>
@@ -390,7 +381,7 @@
         <p class="editorial-body reveal reveal-delay-4">
           Encuentra las herramientas exactas para gestionar tu clínica con la confianza de que es un sistema aprobado por oftalmólogos y amigable con tu presupuesto.
         </p>
-        <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" class="editorial-btn reveal reveal-delay-5">CREA TU CUENTA GRATUITA</a>
+        <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" data-cta-placement="editorial" class="editorial-btn reveal reveal-delay-5">CREA TU CUENTA GRATUITA</a>
       </div>
 
     </div>
@@ -721,7 +712,7 @@
               <div class="pricing-feature"><span class="pf-check green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Procedimientos</div>
               <div class="pricing-feature"><span class="pf-check green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Soporte</div>
             </div>
-            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" class="btn btn-secondary">Crea tu cuenta gratuita</a>
+            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" data-cta-placement="pricing-basica" class="btn btn-secondary">Crea tu cuenta gratuita</a>
           </div>
         </div>
 
@@ -746,7 +737,7 @@
               <div class="pricing-feature"><span class="pf-check green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Estudios</div>
               <div class="pricing-feature"><span class="pf-check green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Soporte prioritario</div>
             </div>
-            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAMX26" class="btn btn-primary">Comienza con 15 días de prueba</a>
+            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAMX26" data-cta-placement="pricing-profesional" class="btn btn-primary">Comienza con 15 días de prueba</a>
           </div>
         </div>
       </div>
