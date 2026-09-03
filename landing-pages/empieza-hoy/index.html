@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tu práctica empieza hoy | Alida Health</title>
+  <meta name="description" content="Si eres oftalmólogo recién egresado, a punto de egresar o tienes poco tiempo en la práctica, Alida es tu aliada. Plan gratuito: hasta 20 consultas al mes.">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CCYKGL0BZZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CCYKGL0BZZ');
+  </script>
+
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_AycxJFviF6SDccscpKHqHQWipCxcqJRhVJU3EoXNssmj', {
+      api_host: 'https://us.i.posthog.com',
+      person_profiles: 'identified_only',
+      autocapture: false,
+      capture_pageview: true,
+      capture_pageleave: false,
+      capture_dead_clicks: false,
+      rageclick: false,
+      disable_session_recording: true,
+      capture_performance: false,
+      enable_heatmaps: false
+    });
+
+    window.alidaExperiment = {
+      id: "exp-002",
+      slug: "empieza-hoy",
+      hypothesis: "start-practice-ally"
+    };
+    posthog.register({
+      site: 'website',
+      environment: 'production',
+      landing: 'empieza-hoy',
+      experiment_id: window.alidaExperiment.id,
+      experiment_slug: window.alidaExperiment.slug,
+      experiment_hypothesis: window.alidaExperiment.hypothesis
+    });
+
+    function findAppLink(e) {
+      return e.target && e.target.closest && e.target.closest('a[href*="app.alidahealth.com"]');
+    }
+    function appendPosthogIds(link) {
+      if (typeof posthog === 'undefined' || !posthog.get_distinct_id) return;
+      try {
+        var url = new URL(link.href);
+        var did = posthog.get_distinct_id();
+        var sid = posthog.get_session_id && posthog.get_session_id();
+        if (did && !url.searchParams.has('_ph_did')) url.searchParams.set('_ph_did', did);
+        if (sid && !url.searchParams.has('_ph_sid')) url.searchParams.set('_ph_sid', sid);
+        link.href = url.toString();
+      } catch (err) {}
+    }
+    document.addEventListener('pointerdown', function (e) {
+      var link = findAppLink(e);
+      if (link) appendPosthogIds(link);
+    });
+    document.addEventListener('click', function (e) {
+      var link = findAppLink(e);
+      if (link) appendPosthogIds(link);
+    });
+  </script>
+  <script src="../../scripts/signup-cta.js?v=1"></script>
+
+  <script>
+    (function () {
+      var PROD_HOSTS = ["alida.health", "www.alida.health", "app.alidahealth.com"];
+      if (PROD_HOSTS.indexOf(window.location.hostname) === -1) return;
+      var s = document.createElement('script');
+      s.src = '../../scripts/meta-pixel.js';
+      s.async = true;
+      document.head.appendChild(s);
+    })();
+  </script>
+
+  <link rel="icon" type="image/png" href="../../assets/favicon-new.png">
+  <link rel="stylesheet" href="../../styles/index.css">
+  <link rel="stylesheet" href="../../styles/navbar.css?v=11">
+  <link rel="stylesheet" href="../../styles/hero.css?v=2">
+  <link rel="stylesheet" href="../../styles/cta.css?v=2">
+  <link rel="stylesheet" href="lp.css">
+</head>
+<body>
+  <nav class="navbar lp-nav" id="navbar">
+    <div class="container">
+      <span class="nav-logo">
+        <img src="../../assets/alida-logo-new.png" alt="Alida Health" />
+      </span>
+      <div class="nav-actions">
+        <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN&landing=empieza-hoy" data-cta-placement="nav" data-landing="empieza-hoy" class="btn btn-primary">Activa tu plan gratuito</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero lp-hero section" id="hero">
+    <div class="container">
+      <div class="lp-hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge reveal">
+            <span class="badge-dot"></span>
+            Plan gratuito
+          </div>
+          <h1 class="reveal reveal-delay-1">Tu práctica empieza hoy. Alida está contigo.</h1>
+          <p class="hero-subtitle reveal reveal-delay-2">
+            Si eres oftalmólogo recién egresado, a punto de egresar o tienes poco tiempo en la práctica, Alida es tu aliada para comenzar con el pie derecho.
+          </p>
+          <p class="lp-callout reveal reveal-delay-2">
+            Nosotros te apoyamos para que tú te enfoques en lo más importante: <strong>tus pacientes</strong>.
+          </p>
+          <div class="lp-hero-actions reveal reveal-delay-3">
+            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN&landing=empieza-hoy" data-cta-placement="hero" data-landing="empieza-hoy" class="btn btn-primary btn-lg">Activa tu plan gratuito</a>
+            <p class="lp-hero-note">Hasta 20 consultas al mes, sin costo. Tarjeta de crédito no requerida.</p>
+          </div>
+        </div>
+
+        <div class="lp-offer reveal reveal-delay-4">
+          <div class="lp-offer-card">
+            <span class="lp-offer-kicker">Plan gratuito</span>
+            <strong>20 consultas al mes</strong>
+            <p>Empieza a consultar sin pagar por un sistema de clínica completa.</p>
+          </div>
+          <div class="lp-offer-card">
+            <span class="lp-offer-kicker">Tu equipo</span>
+            <strong>1 médico + 2 asistentes</strong>
+            <p>Trabaja en equipo desde el día uno, no solo tú.</p>
+          </div>
+          <div class="lp-offer-card">
+            <span class="lp-offer-kicker">Acompañamiento</span>
+            <strong>Inducción y soporte</strong>
+            <p>Te ayudamos a arrancar para que tú te quedes con el paciente.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section" id="consulta">
+    <div class="container">
+      <h2>Así se ve una consulta en Alida.</h2>
+      <p class="lp-lead">
+        Agenda, expediente y receta en el mismo lugar.
+      </p>
+      <div class="lp-video">
+        <div class="lp-video-frame" role="img" aria-label="Consulta en Alida: abrir la cita, documentar y recetar">
+          <p>Abrir la cita, documentar y recetar. Clip de ~30s, sin audio.</p>
+        </div>
+        <p class="lp-video-caption">Sin audio. Solo el flujo de consulta de todos los días.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lp-section lp-section-alt" id="prueba">
+    <div class="container">
+      <div class="lp-proof">
+        <p class="lp-proof-label">Oftalmólogos que ya consultan en Alida</p>
+        <blockquote>
+          “Ayuda a optimizar tiempos en la consulta, llevar un expediente ordenado. También facilita la realización de la receta e interpretación de estudios.”
+        </blockquote>
+        <p class="lp-proof-author">Dra. Karla Samara García Kronfeld · Colima</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section section" id="empezar">
+    <div class="container">
+      <div class="cta-wrapper">
+        <div class="cta-content">
+          <h2>Empieza hoy. Alida está contigo.</h2>
+          <p>Activa tu plan gratuito. Hasta 20 consultas al mes, sin costo.</p>
+          <div class="cta-form">
+            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN&landing=empieza-hoy" data-cta-placement="footer" data-landing="empieza-hoy" class="btn btn-primary btn-lg">Activa tu plan gratuito</a>
+          </div>
+          <p class="lp-cta-quote">
+            “Ahora todo en mi consulta es más ágil: organizo mi agenda, registro mis pacientes y genero recetas en segundos.” — Dr. Edric González · Toluca
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer lp-footer">
+    <div class="container">
+      <div class="lp-footer-top">
+        <div class="footer-brand">
+          <span class="footer-logo">
+            <img src="../../assets/alida-logo-footer.png" alt="Alida Health" />
+          </span>
+          <p>Software especializado 100% en oftalmología.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Alida Health. Todos los derechos reservados.</p>
+        <div class="footer-bottom-links">
+          <a href="../../privacy.html">Aviso de Privacidad</a>
+          <a href="../../terms.html">Términos y Condiciones</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../scripts/main.js?v=7"></script>
+</body>
+</html>

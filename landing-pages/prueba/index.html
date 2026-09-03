@@ -38,6 +38,7 @@
     posthog.register({
       site: 'website',
       environment: 'production',
+      landing: 'prueba',
       experiment_id: window.alidaExperiment.id,
       experiment_slug: window.alidaExperiment.slug,
       experiment_hypothesis: window.alidaExperiment.hypothesis
@@ -63,18 +64,10 @@
     });
     document.addEventListener('click', function (e) {
       var link = findAppLink(e);
-      if (!link) return;
-      if (link.href.indexOf('/users/sign_up') !== -1 && link.href.indexOf('ALIDAFREEPLAN') !== -1) {
-        if (typeof posthog !== 'undefined') {
-          posthog.capture('experiment_cta_clicked', window.alidaExperiment);
-        }
-        if (typeof fbq === 'function') {
-          fbq('track', 'InitiateCheckout', { content_name: 'Plan Gratis - Clic CTA', experiment_id: 'exp-001' });
-        }
-      }
-      appendPosthogIds(link);
+      if (link) appendPosthogIds(link);
     });
   </script>
+  <script src="../../scripts/signup-cta.js?v=1"></script>
 
   <script>
     (function () {
@@ -101,7 +94,7 @@
         <img src="../../assets/alida-logo-new.png" alt="Alida Health" />
       </a>
       <div class="nav-actions">
-        <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" class="btn btn-primary">Empieza con tu primer paciente</a>
+        <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" data-cta-placement="nav" data-landing="prueba" class="btn btn-primary">Empieza con tu primer paciente</a>
       </div>
     </div>
   </nav>
@@ -119,7 +112,7 @@
             Agenda y expediente para oftalmología. Para el consultorio que abres hoy, y para el que vas a construir.
           </p>
           <div class="lp-hero-actions reveal reveal-delay-3">
-            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" class="btn btn-primary btn-lg">Empieza con tu primer paciente</a>
+            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" data-cta-placement="hero" data-landing="prueba" class="btn btn-primary btn-lg">Empieza con tu primer paciente</a>
             <p class="lp-hero-note">Asistentes, más médicos, un hospital. El mismo sistema.</p>
           </div>
         </div>
@@ -257,7 +250,7 @@
           <h2>Organiza tu consulta desde el día uno.</h2>
           <p>Abre tu consultorio en Alida y atiende a tu primer paciente.</p>
           <div class="cta-form">
-            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" class="btn btn-primary btn-lg">Empieza con tu primer paciente</a>
+            <a href="https://app.alidahealth.com/users/sign_up?referral_code=ALIDAFREEPLAN" data-cta-placement="footer" data-landing="prueba" class="btn btn-primary btn-lg">Empieza con tu primer paciente</a>
           </div>
         </div>
       </div>

@@ -47,7 +47,7 @@ Not set yet. Planned: one ads channel (Meta) pointing at this URL. Do not link i
 
 Define the numeric bar in Phase 4 of the acquisition cycle before spending. Until then, measure:
 
-- Landing → CTA click
+- Landing → CTA click (`cta_clicked` / Meta `CTAClicked`: `placement`, `label`, `landing`, `referral_code`)
 - CTA → signup
 - Signup → first appointment (activation)
 - Is the lead a recently graduated ophthalmologist / new consultorio?
