@@ -2,7 +2,10 @@
    environment is production only on alida.health / www.
    Experiment keys are registered only when window.alidaExperiment is set
    before this file runs, and always cleared first so a prior landing
-   does not tag the homepage. Session replay is on for production landings. */
+   does not tag the homepage. Session replay is on for production landings.
+   First-touch campaign params (same keys as the app PosthogUtmCapture
+   concern) are stored in sessionStorage and copied onto app signup links
+   so user_signed_up can carry source, medium, and campaign. */
 (function () {
   var TOKEN = "phc_AycxJFviF6SDccscpKHqHQWipCxcqJRhVJU3EoXNssmj";
   var PROD_HOSTS = ["alida.health", "www.alida.health"];
@@ -12,6 +15,18 @@
     "experiment_slug",
     "experiment_hypothesis"
   ];
+  var CAMPAIGN_KEYS = [
+    "utm_source",
+    "utm_medium",
+    "utm_campaign",
+    "utm_term",
+    "utm_content",
+    "utm_id",
+    "gclid",
+    "fbclid",
+    "msclkid"
+  ];
+  var FIRST_TOUCH_KEY = "alida_first_touch_campaign";
   var isProd = PROD_HOSTS.indexOf(window.location.hostname) !== -1;
   var isLandingPage = window.location.pathname.indexOf("/landing-pages/") === 0;
   var experiment = window.alidaExperiment;
@@ -47,28 +62,76 @@
     posthog.register(experimentProps);
   }
 
+  function readFirstTouch() {
+    try {
+      var raw = sessionStorage.getItem(FIRST_TOUCH_KEY);
+      if (!raw) return {};
+      var parsed = JSON.parse(raw);
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch (err) {
+      return {};
+    }
+  }
+
+  function writeFirstTouch(stored) {
+    try {
+      sessionStorage.setItem(FIRST_TOUCH_KEY, JSON.stringify(stored));
+    } catch (err) {}
+  }
+
+  function campaignFromSearch(search) {
+    var params = new URLSearchParams(search);
+    var incoming = {};
+    CAMPAIGN_KEYS.forEach(function (key) {
+      var val = params.get(key);
+      if (val) incoming[key] = val;
+    });
+    return incoming;
+  }
+
+  function captureFirstTouch() {
+    var stored = readFirstTouch();
+    var incoming = campaignFromSearch(window.location.search);
+    var changed = false;
+    Object.keys(incoming).forEach(function (key) {
+      if (!stored[key]) {
+        stored[key] = incoming[key];
+        changed = true;
+      }
+    });
+    if (changed) writeFirstTouch(stored);
+    return stored;
+  }
+
+  var firstTouch = captureFirstTouch();
+  window.alidaFirstTouchCampaign = firstTouch;
+
   function findAppLink(e) {
     return e.target && e.target.closest && e.target.closest('a[href*="app.alidahealth.com"]');
   }
 
-  function appendPosthogIds(link) {
-    if (typeof posthog === "undefined" || !posthog.get_distinct_id) return;
+  function decorateAppLink(link) {
     try {
       var url = new URL(link.href);
-      var did = posthog.get_distinct_id();
-      var sid = posthog.get_session_id && posthog.get_session_id();
-      if (did && !url.searchParams.has("_ph_did")) url.searchParams.set("_ph_did", did);
-      if (sid && !url.searchParams.has("_ph_sid")) url.searchParams.set("_ph_sid", sid);
+      Object.keys(firstTouch).forEach(function (key) {
+        if (!url.searchParams.has(key)) url.searchParams.set(key, firstTouch[key]);
+      });
+      if (typeof posthog !== "undefined" && posthog.get_distinct_id) {
+        var did = posthog.get_distinct_id();
+        var sid = posthog.get_session_id && posthog.get_session_id();
+        if (did && !url.searchParams.has("_ph_did")) url.searchParams.set("_ph_did", did);
+        if (sid && !url.searchParams.has("_ph_sid")) url.searchParams.set("_ph_sid", sid);
+      }
       link.href = url.toString();
     } catch (err) {}
   }
 
   document.addEventListener("pointerdown", function (e) {
     var link = findAppLink(e);
-    if (link) appendPosthogIds(link);
+    if (link) decorateAppLink(link);
   });
   document.addEventListener("click", function (e) {
     var link = findAppLink(e);
-    if (link) appendPosthogIds(link);
+    if (link) decorateAppLink(link);
   });
 })();
