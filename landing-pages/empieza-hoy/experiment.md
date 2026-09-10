@@ -47,13 +47,15 @@ Ad UTMs stay on `utm_*` (which creative). `landing=empieza-hoy` is which page. `
 
 ## Success Metrics
 
-Define the numeric bar before spending. Until then, measure in PostHog with `landing = empieza-hoy`:
+Define the numeric bar before spending. Until then, measure in PostHog on the acquisition board (landing experiments section). First step is `$pathname` contains `/landing-pages/` on `alida.health` / `www.alida.health` so preview and homepage leaks do not count.
 
-- `$pageview` where `site = website` (this path)
-- `cta_clicked` (PostHog) / `CTAClicked` (Meta custom). Props: `placement` (`nav` \| `hero` \| `footer`), `label`, `landing`, `referral_code`. Not InitiateCheckout.
+- `$pageview` where `site = website` and path is this landing
+- `cta_clicked` (PostHog) / `CTAClicked` (Meta custom). Props: `placement` (`nav` \| `hero` \| `footer`), `label`, `landing`, `referral_code`. Not `experiment_cta_clicked`. Not InitiateCheckout.
 - `$pageview` where `site = app` (signup)
-- `user_signed_up`
+- `user_signed_up` (app sends `landing` when the signup URL had `?landing=`)
 - First `appointment_created` (activation)
+
+`environment` is `production` only on alida.health / www. Preview and localhost send `preview`. Bump `experiment_id` when this page’s copy changes.
 
 ## Outcome
 
