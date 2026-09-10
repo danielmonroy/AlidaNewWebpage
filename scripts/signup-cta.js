@@ -26,11 +26,16 @@
       (dest && dest.searchParams.get("landing")) ||
       null;
 
+    var experiment = window.alidaExperiment || {};
+
     return compact({
       placement: link.getAttribute("data-cta-placement") || "unknown",
       label: (link.textContent || "").replace(/\s+/g, " ").trim(),
       landing: landing,
-      referral_code: dest && dest.searchParams.get("referral_code")
+      referral_code: dest && dest.searchParams.get("referral_code"),
+      experiment_id: experiment.id,
+      experiment_slug: experiment.slug,
+      experiment_hypothesis: experiment.hypothesis
     });
   }
 
