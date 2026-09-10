@@ -288,33 +288,30 @@ window.addEventListener('scroll', () => {
   });
 }, { passive: true });
 
-/* ── UTM Parameter Forwarding ── */
+/* ── First-touch campaign params onto outbound links ──
+   posthog-website.js owns sessionStorage first-touch. This pass also
+   stamps those keys on non-app links (and on app links before click). */
 function initUTMForwarding() {
-  const urlParams = new URLSearchParams(window.location.search);
-  
-  if (Array.from(urlParams).length === 0) return;
+  const firstTouch = window.alidaFirstTouchCampaign || {};
+  if (Object.keys(firstTouch).length === 0) return;
 
-  const links = document.querySelectorAll('a');
-  links.forEach(link => {
+  document.querySelectorAll('a').forEach((link) => {
     try {
       const href = link.getAttribute('href');
       if (!href || href.startsWith('javascript:') || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
 
       const linkUrl = new URL(link.href);
-      
       if (linkUrl.protocol !== 'http:' && linkUrl.protocol !== 'https:') return;
 
-      let hasUtm = false;
-      for (const [key, value] of urlParams.entries()) {
+      let changed = false;
+      Object.keys(firstTouch).forEach((key) => {
         if (!linkUrl.searchParams.has(key)) {
-          linkUrl.searchParams.set(key, value);
-          hasUtm = true;
+          linkUrl.searchParams.set(key, firstTouch[key]);
+          changed = true;
         }
-      }
+      });
 
-      if (hasUtm) {
-        link.href = linkUrl.toString();
-      }
+      if (changed) link.href = linkUrl.toString();
     } catch (e) {
       // Silently ignore invalid URLs
     }

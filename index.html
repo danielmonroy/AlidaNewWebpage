@@ -13,20 +13,9 @@
     gtag('config', 'G-CCYKGL0BZZ');
   </script>
 
-  <!-- PostHog: scripts/posthog-website.js. Typeform stays here — landings have no form. -->
-  <script src="scripts/posthog-website.js?v=2"></script>
-  <script>
-    window.addEventListener('message', function (e) {
-      if (typeof e.data !== 'string') return;
-      if (typeof posthog === 'undefined') return;
-      if (e.data.indexOf('form-ready') === 0) {
-        posthog.capture('typeform_opened', { form_id: 'V2Njuf39' });
-      }
-      if (e.data.indexOf('form-submit') === 0) {
-        posthog.capture('typeform_submitted', { form_id: 'V2Njuf39' });
-      }
-    });
-  </script>
+  <!-- PostHog: scripts/posthog-website.js. Typeform stays on the homepage — landings have no form. -->
+  <script src="scripts/posthog-website.js?v=3"></script>
+  <script src="scripts/typeform-posthog.js?v=1"></script>
   <script src="scripts/signup-cta.js?v=2"></script>
 
   <!-- Meta Pixel Code (Only on production) -->
@@ -830,6 +819,6 @@
   </footer>
 
   <script src="scripts/hero-dots.js?v=7"></script>
-  <script src="scripts/main.js?v=7"></script>
+  <script src="scripts/main.js?v=8"></script>
 </body>
 </html>
