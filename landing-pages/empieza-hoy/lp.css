@@ -148,7 +148,13 @@
   overflow: hidden;
   background: #0E2041;
   border: 1px solid rgba(14, 32, 65, 0.12);
-  transform: translateZ(0);
+}
+
+@supports not (aspect-ratio: 16 / 9) {
+  .lp-video-frame {
+    height: 0;
+    padding-bottom: 56.25%;
+  }
 }
 
 .lp-video-frame iframe {
@@ -158,7 +164,6 @@
   height: 100%;
   border: 0;
   display: block;
-  border-radius: 20px;
 }
 
 .lp-video-caption {
@@ -189,8 +194,27 @@
   animation: lp-quotes-scroll 70s linear infinite;
 }
 
-.lp-quotes:hover .lp-quotes-track {
-  animation-play-state: paused;
+@media (hover: hover) {
+  .lp-quotes:hover .lp-quotes-track {
+    animation-play-state: paused;
+  }
+}
+
+@media (hover: none) {
+  .lp-quotes-track {
+    animation: none;
+  }
+
+  .lp-quotes {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .lp-quotes-group[aria-hidden="true"] {
+    display: none;
+  }
 }
 
 .lp-quotes-group {
@@ -436,6 +460,10 @@
   .lp-hero h1,
   .lp-hero .hero-subtitle {
     padding: 0;
+  }
+
+  .lp-hero h1 {
+    font-size: 32px;
   }
 
   .lp-quotes {
