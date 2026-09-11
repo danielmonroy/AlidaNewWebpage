@@ -23,6 +23,11 @@
   max-width: 18ch;
 }
 
+.lp-hero .hero-badge {
+  font-size: var(--text-base);
+  padding: 7px 18px;
+}
+
 .lp-hero-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -466,6 +471,11 @@
     font-size: 32px;
   }
 
+  .lp-hero .hero-badge {
+    font-size: 13px;
+    padding: 6px 14px;
+  }
+
   .lp-quotes {
     --lp-gutter: 28px;
   }
@@ -497,6 +507,10 @@
 }
 
 @media (max-width: 480px) {
+  .lp-hero .hero-badge {
+    font-size: 12px;
+  }
+
   .lp-quotes {
     --lp-gutter: var(--space-4);
   }
