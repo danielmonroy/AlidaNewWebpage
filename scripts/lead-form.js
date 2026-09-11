@@ -12,7 +12,10 @@
     "fbclid",
     "msclkid"
   ];
-  var TURNSTILE_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+  var TURNSTILE_ONLOAD = "__alidaTurnstileOnload";
+  var TURNSTILE_SRC =
+    "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=" +
+    TURNSTILE_ONLOAD;
   var turnstileReady = null;
 
   function leadsBase() {
@@ -39,18 +42,15 @@
     if (turnstileReady) return turnstileReady;
 
     turnstileReady = new Promise(function (resolve, reject) {
-      var existing = document.querySelector("script[data-alida-turnstile]");
-      if (existing) {
-        existing.addEventListener("load", function () { resolve(); });
-        existing.addEventListener("error", reject);
-        return;
-      }
+      window[TURNSTILE_ONLOAD] = function () {
+        delete window[TURNSTILE_ONLOAD];
+        resolve();
+      };
+
       var script = document.createElement("script");
       script.src = TURNSTILE_SRC;
       script.async = true;
-      script.defer = true;
       script.setAttribute("data-alida-turnstile", "1");
-      script.addEventListener("load", function () { resolve(); });
       script.addEventListener("error", reject);
       document.head.appendChild(script);
     });
@@ -59,30 +59,68 @@
 
   function mountCaptcha(form, siteKey) {
     var box = form.querySelector("[data-lead-captcha]");
-    if (!box || !siteKey || !window.turnstile) return;
+    if (!box || !siteKey || !window.turnstile) return false;
 
     box.innerHTML = "";
+    form._alidaTurnstileToken = "";
     var theme = form.getAttribute("data-lead-theme") === "light" ? "light" : "dark";
-    form._alidaTurnstileId = window.turnstile.render(box, {
-      sitekey: siteKey,
-      theme: theme,
-      size: "flexible",
-      appearance: "always",
-      language: "es"
-    });
+    try {
+      form._alidaTurnstileId = window.turnstile.render(box, {
+        sitekey: siteKey,
+        theme: theme,
+        size: "flexible",
+        appearance: "interaction-only",
+        language: "es",
+        callback: function (token) {
+          form._alidaTurnstileToken = token || "";
+          if (form._alidaTurnstileWait) {
+            form._alidaTurnstileWait(form._alidaTurnstileToken);
+            form._alidaTurnstileWait = null;
+          }
+        },
+        "expired-callback": function () {
+          form._alidaTurnstileToken = "";
+        },
+        "error-callback": function () {
+          form._alidaTurnstileToken = "";
+        }
+      });
+      return form._alidaTurnstileId != null;
+    } catch (error) {
+      return false;
+    }
   }
 
   function resetCaptcha(form) {
+    form._alidaTurnstileToken = "";
     if (window.turnstile && form._alidaTurnstileId != null) {
       window.turnstile.reset(form._alidaTurnstileId);
     }
   }
 
   function captchaToken(form) {
+    if (form._alidaTurnstileToken) return form._alidaTurnstileToken;
     if (window.turnstile && form._alidaTurnstileId != null) {
       return window.turnstile.getResponse(form._alidaTurnstileId) || "";
     }
     return "";
+  }
+
+  function waitForCaptchaToken(form) {
+    var existing = captchaToken(form);
+    if (existing) return Promise.resolve(existing);
+
+    return new Promise(function (resolve) {
+      var timer = setTimeout(function () {
+        form._alidaTurnstileWait = null;
+        resolve(captchaToken(form));
+      }, 8000);
+
+      form._alidaTurnstileWait = function (token) {
+        clearTimeout(timer);
+        resolve(token || "");
+      };
+    });
   }
 
   function payloadFrom(form) {
@@ -110,6 +148,35 @@
     return data;
   }
 
+  function postLead(form, button) {
+    fetch(leadsBase(), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payloadFrom(form))
+    })
+      .then(function (response) {
+        return response.json().then(function (body) {
+          return { ok: response.ok, body: body };
+        }).catch(function () {
+          return { ok: response.ok, body: {} };
+        });
+      })
+      .then(function (result) {
+        if (!result.ok) {
+          showError(form, result.body.error || "No pudimos enviar tus datos. Intenta de nuevo.");
+          resetCaptcha(form);
+          if (button) button.disabled = false;
+          return;
+        }
+        showSuccess(form);
+      })
+      .catch(function () {
+        showError(form, "No pudimos enviar tus datos. Revisa tu conexión e intenta de nuevo.");
+        resetCaptcha(form);
+        if (button) button.disabled = false;
+      });
+  }
+
   function showError(form, message) {
     var el = form.querySelector("[data-lead-error]");
     if (!el) return;
@@ -119,17 +186,38 @@
 
   function showSuccess(form) {
     var wrap = form.closest("[data-lead-wrap]");
-    if (wrap) {
-      var success = wrap.querySelector("[data-lead-success]");
+    var fields = form.querySelector("[data-lead-fields]");
+    if (fields) {
+      fields.hidden = true;
+    } else {
       form.hidden = true;
-      if (success) success.hidden = false;
-      return;
     }
-    form.hidden = true;
+    if (wrap) wrap.classList.add("is-sent");
+    var success = (wrap || form).querySelector("[data-lead-success]");
+    if (success) success.hidden = false;
+  }
+
+  function fetchCaptchaConfig() {
+    return fetch(leadsBase() + "/captcha").then(function (response) {
+      if (!response.ok) throw new Error("captcha");
+      return response.json();
+    });
+  }
+
+  function fetchCaptchaConfigWithRetry() {
+    return fetchCaptchaConfig().catch(function () {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          fetchCaptchaConfig().then(resolve).catch(reject);
+        }, 500);
+      });
+    });
   }
 
   function bindForm(form, siteKey) {
-    if (siteKey) mountCaptcha(form, siteKey);
+    if (siteKey && !mountCaptcha(form, siteKey)) {
+      showError(form, "No se pudo cargar la verificación. Recarga la página.");
+    }
 
     form.addEventListener("submit", function (event) {
       event.preventDefault();
@@ -138,32 +226,15 @@
       var button = form.querySelector("[type='submit']");
       if (button) button.disabled = true;
 
-      fetch(leadsBase(), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payloadFrom(form))
-      })
-        .then(function (response) {
-          return response.json().then(function (body) {
-            return { ok: response.ok, body: body };
-          }).catch(function () {
-            return { ok: response.ok, body: {} };
-          });
-        })
-        .then(function (result) {
-          if (!result.ok) {
-            showError(form, result.body.error || "No pudimos enviar tus datos. Intenta de nuevo.");
-            resetCaptcha(form);
-            if (button) button.disabled = false;
-            return;
-          }
-          showSuccess(form);
-        })
-        .catch(function () {
-          showError(form, "No pudimos enviar tus datos. Revisa tu conexión e intenta de nuevo.");
-          resetCaptcha(form);
+      var ready = siteKey ? waitForCaptchaToken(form) : Promise.resolve("");
+      ready.then(function (token) {
+        if (siteKey && !token) {
+          showError(form, "Completa la verificación para continuar.");
           if (button) button.disabled = false;
-        });
+          return;
+        }
+        postLead(form, button);
+      });
     });
   }
 
@@ -171,8 +242,7 @@
     var forms = document.querySelectorAll("[data-lead-form]");
     if (!forms.length) return;
 
-    fetch(leadsBase() + "/captcha")
-      .then(function (response) { return response.json(); })
+    fetchCaptchaConfigWithRetry()
       .then(function (config) {
         var siteKey = config && config.enabled ? config.site_key : "";
         var ready = siteKey ? loadTurnstile() : Promise.resolve();
@@ -181,9 +251,34 @@
         });
       })
       .catch(function () {
-        forms.forEach(function (form) { bindForm(form, ""); });
+        forms.forEach(function (form) {
+          bindForm(form, "");
+          showError(form, "No se pudo cargar la verificación. Recarga la página.");
+        });
       });
   }
+
+  function aimLeadForm() {
+    var wrap = document.getElementById("lead-form");
+    if (!wrap) return;
+
+    wrap.classList.add("is-aimed");
+    var name = wrap.querySelector("input[name='name']");
+    if (name) {
+      setTimeout(function () {
+        name.focus({ preventScroll: true });
+      }, 400);
+    }
+    setTimeout(function () {
+      wrap.classList.remove("is-aimed");
+    }, 2400);
+  }
+
+  document.addEventListener("click", function (event) {
+    var link = event.target.closest("a[href='#lead-form']");
+    if (!link) return;
+    aimLeadForm();
+  });
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);

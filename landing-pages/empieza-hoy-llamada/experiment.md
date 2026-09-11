@@ -10,7 +10,7 @@ Draft — call-form landing. Same page body as Empieza hoy; the hero asks for a 
 
 ## Hypothesis
 
-Early-career ophthalmologists who bounce on a self-serve signup hop will leave a WhatsApp or email if the first action is “te llamamos,” and those conversations convert to clinics we provision after the call.
+Early-career ophthalmologists who bounce on a self-serve signup hop will leave a WhatsApp and email if the first action is “te llamamos,” and those conversations convert to clinics we provision after the call.
 
 ## Audience
 
@@ -23,7 +23,7 @@ Starting to consult on their own feels unsupported. A hop to `/users/sign_up` fr
 ## Why We Believe This
 
 - Paid Empieza hoy traffic landed but did not click Empieza gratis. The suspected leak is first-screen / hop friction, not “they already have software.”
-- The motion is: leave a name + WhatsApp or email → we call → we create the account with `?landing=empieza-hoy-llamada`.
+- The motion is: leave a name + WhatsApp and email → we call → we create the account with `?landing=empieza-hoy-llamada`.
 - This is a different bet from Empieza hoy (self-serve free plan). Do not mix both CTAs on one URL.
 
 ## Value Proposition
@@ -34,7 +34,7 @@ Alida is the ally that lets them start today. We set it up with them on a call.
 
 One action: leave contact details so we can call.
 
-- Fields: name (required), WhatsApp first, then email. At least one of phone or email.
+- Fields: name, WhatsApp, and email. All required.
 - No Typeform. No signup hop. No WhatsApp click-to-chat as the test.
 - Endpoint: `POST https://app.alidahealth.com/marketing/leads` (Cloudflare Turnstile).
 - After the call: send the lead the `signup_url` from the Slack ping (referral + landing + UTMs from the lead row). Do **not** open that link as Alida staff. The lead POST also sends `referral_code` (default `ALIDAFREEPLAN`, or `?referral_code=` on this page).
