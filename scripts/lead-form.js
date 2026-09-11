@@ -184,7 +184,7 @@
     el.textContent = message || "";
   }
 
-  function showSuccess(form) {
+  function showSuccessOnForm(form) {
     var wrap = form.closest("[data-lead-wrap]");
     var fields = form.querySelector("[data-lead-fields]");
     if (fields) {
@@ -192,9 +192,27 @@
     } else {
       form.hidden = true;
     }
-    if (wrap) wrap.classList.add("is-sent");
+    if (wrap) {
+      wrap.classList.add("is-sent");
+      var lead = wrap.querySelector(".lp-form-lead");
+      if (lead) lead.hidden = true;
+    }
     var success = (wrap || form).querySelector("[data-lead-success]");
     if (success) success.hidden = false;
+    var button = form.querySelector("[type='submit']");
+    if (button) button.disabled = true;
+  }
+
+  function markCtasSent() {
+    document.querySelectorAll("[data-lead-cta]").forEach(function (cta) {
+      cta.classList.add("is-sent");
+      cta.textContent = "Te contactaremos";
+    });
+  }
+
+  function showSuccess() {
+    document.querySelectorAll("[data-lead-form]").forEach(showSuccessOnForm);
+    markCtasSent();
   }
 
   function fetchCaptchaConfig() {
@@ -260,7 +278,7 @@
 
   function aimLeadForm() {
     var wrap = document.getElementById("lead-form");
-    if (!wrap) return;
+    if (!wrap || wrap.classList.contains("is-sent")) return;
 
     wrap.classList.add("is-aimed");
     var name = wrap.querySelector("input[name='name']");
