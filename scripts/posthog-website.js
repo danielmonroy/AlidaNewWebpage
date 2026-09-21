@@ -3,6 +3,7 @@
    Experiment keys are registered only when window.alidaExperiment is set
    before this file runs, and always cleared first so a prior landing
    does not tag the homepage. Session replay is on for production landings.
+   Landings also send Web Vitals (no network timing) and heatmap snapshots.
    First-touch campaign params (same keys as the app PosthogUtmCapture
    concern) are stored in sessionStorage and copied onto app signup links
    so user_signed_up can carry source, medium, and campaign. */
@@ -42,8 +43,8 @@
     capture_dead_clicks: false,
     rageclick: false,
     disable_session_recording: !(isProd && isLandingPage),
-    capture_performance: false,
-    enable_heatmaps: false
+    capture_performance: isLandingPage ? { web_vitals: true, network_timing: false } : false,
+    enable_heatmaps: isLandingPage
   });
 
   EXPERIMENT_KEYS.forEach(function (key) {
