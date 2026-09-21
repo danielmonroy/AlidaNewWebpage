@@ -1,6 +1,8 @@
-/* Marketing lead form: POST /marketing/leads. No PII to PostHog from the page. */
+/* Marketing lead form: POST /marketing/leads. No PII to PostHog from the page.
+   lead_form_started fires once on first field focus or nav tap to #lead-form. */
 (function () {
   var LOCAL_HOSTS = ["localhost", "127.0.0.1"];
+  var formStarted = false;
   var CAMPAIGN_KEYS = [
     "utm_source",
     "utm_medium",
@@ -26,6 +28,13 @@
 
   function landingSlug() {
     return (window.alidaExperiment && window.alidaExperiment.slug) || "empieza-hoy-llamada";
+  }
+
+  function captureFormStarted() {
+    if (formStarted) return;
+    formStarted = true;
+    if (typeof posthog === "undefined") return;
+    posthog.capture("lead_form_started", { landing: landingSlug() });
   }
 
   function referralCode(form) {
@@ -237,6 +246,13 @@
       showError(form, "No se pudo cargar la verificación. Recarga la página.");
     }
 
+    form.addEventListener("focusin", function (event) {
+      var tag = event.target && event.target.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") {
+        captureFormStarted();
+      }
+    });
+
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       showError(form, "");
@@ -279,6 +295,7 @@
   function aimLeadForm() {
     var wrap = document.getElementById("lead-form");
     if (!wrap || wrap.classList.contains("is-sent")) return;
+    captureFormStarted();
 
     wrap.classList.add("is-aimed");
     var name = wrap.querySelector("input[name='name']");
