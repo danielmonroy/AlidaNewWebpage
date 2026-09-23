@@ -91,7 +91,49 @@ window.ALIDA_APRENDE_VIDEOS = [
     faq: [
       { q: "¿Puedo apagar la agenda en línea?", a: "Sí, cuando quieras, desde la configuración del consultorio." }
     ]
+  },
+  {
+    slug: "programa-de-referidos",
+    title: "Programa de referidos",
+    summary: "Comparte Alida y recibe beneficios por tus referidos.",
+    youtubeId: "jNQXAC9IVRw",
+    category: "Referidos",
+    popular: true,
+    faq: [
+      {
+        q: "¿Qué gana la clínica que invito?",
+        a: "Puede comenzar gratis con hasta 20 consultas al mes, sin límite de tiempo. Si necesita más, puede contratar una suscripción y su primer mes será gratis."
+      },
+      {
+        q: "¿Cuándo recibo el crédito?",
+        a: "Cuando la clínica que invitaste paga su primera factura. El registro y el periodo de prueba no generan crédito."
+      },
+      {
+        q: "¿Cuánto crédito recibo?",
+        a: "Recibes el valor que pagas por un asiento en tu plan, con IVA incluido, por cada asiento que contrate la clínica que invitaste."
+      },
+      {
+        q: "¿Cómo se calcula mi crédito?",
+        a: "Por ejemplo, si un asiento de tu plan cuesta $1,500 + IVA y la clínica que invitaste contrata dos asientos, recibes un crédito equivalente al valor de esos dos asientos."
+      },
+      {
+        q: "¿Qué pasa si todavía no tengo una suscripción?",
+        a: "No pierdes el crédito. Se acumula en tu cuenta y se aplicará automáticamente cuando contrates una suscripción."
+      },
+      {
+        q: "¿Qué pasa si la clínica que invité cancela?",
+        a: "Si cancela antes de pagar su primera factura, no se genera crédito. Si ya realizó su primer pago, el crédito que recibiste se mantiene. Los cambios posteriores en el número de asientos no modifican ese crédito."
+      },
+      {
+        q: "¿Qué pasa si yo cancelo mi suscripción?",
+        a: "Tu crédito se mantiene en tu cuenta y se aplicará automáticamente a la próxima factura que pagues cuando vuelvas a suscribirte."
+      },
+      {
+        q: "¿Puedo invitar a una clínica que ya usa Alida?",
+        a: "No. Para que la invitación sea válida, la clínica debe crear su cuenta utilizando tu enlace de invitación."
+      }
+    ]
   }
 ];
 
-window.ALIDA_APRENDE_TOPICS = ["Pacientes", "Consultas", "Estudios", "Cirugía", "Consultorio"];
+window.ALIDA_APRENDE_TOPICS = ["Pacientes", "Consultas", "Estudios", "Cirugía", "Consultorio", "Referidos"];
