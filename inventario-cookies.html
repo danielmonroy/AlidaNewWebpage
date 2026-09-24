@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventario de cookies | Alida Health</title>
+  <meta name="description" content="Inventario de cookies de producción de Alida Health, y notas sobre PostHog, Google Analytics, servidores y análisis de datos.">
+  <meta name="robots" content="noindex, follow">
+
+  <link rel="icon" type="image/png" href="assets/favicon-new.png">
+  <link rel="stylesheet" href="styles/index.css">
+  <link rel="stylesheet" href="styles/navbar.css?v=11">
+  <link rel="stylesheet" href="styles/cta.css?v=4">
+  <style>
+    .navbar {
+      background: var(--surface-glass, rgba(255, 255, 255, 0.9)) !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    }
+    .nav-logo img { filter: brightness(0) !important; }
+    .nav-links a { color: var(--color-gray-800, #333) !important; }
+    .nav-toggle span { background: #000 !important; }
+    .navbar .btn-login { color: var(--color-white, #fff) !important; }
+
+    .privacy-section {
+      padding: 140px 0 80px;
+      background-color: var(--color-gray-50, #f8fafc);
+    }
+    .privacy-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 48px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    .privacy-content h1 {
+      margin-bottom: 1rem;
+      font-size: 2.5rem;
+      color: var(--color-dark, #1a1a1a);
+    }
+    .privacy-content h2 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.35rem;
+      color: var(--color-primary, #2969E5);
+    }
+    .privacy-content p,
+    .privacy-content li {
+      margin-bottom: 1rem;
+      line-height: 1.7;
+      color: var(--color-gray-600, #666);
+    }
+    .privacy-content ul {
+      margin-bottom: 1.5rem;
+      padding-left: 1.25rem;
+      list-style: disc;
+    }
+    .privacy-content a {
+      color: var(--color-primary, #2969E5);
+      text-decoration: underline;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin: 1.5rem 0 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      line-height: 1.45;
+    }
+    th, td {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 0.7rem 0.55rem;
+      text-align: left;
+      vertical-align: top;
+      color: var(--color-gray-700, #333);
+    }
+    th {
+      font-size: 0.75rem;
+      color: var(--color-gray-500, #666);
+      white-space: nowrap;
+    }
+    code {
+      font-size: 0.85em;
+    }
+    @media (max-width: 768px) {
+      .privacy-section { padding: 100px 0 40px; }
+      .privacy-content { padding: 24px; border-radius: 12px; }
+      .privacy-content h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/alida-logo-new.png" alt="Alida Health" />
+      </a>
+      <div class="nav-links">
+        <a href="index.html#features">Consulta</a>
+        <a href="index.html#benefits">Clínica / Hospital</a>
+        <a href="index.html#testimonials">Testimonios</a>
+        <a href="index.html#pricing">Precios</a>
+      </div>
+      <div class="nav-actions">
+        <a href="https://app.alidahealth.com/users/sign_in" class="btn btn-outline btn-login">Ingresa a tu cuenta</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <section class="privacy-section">
+    <div class="container">
+      <div class="privacy-content">
+        <h1>Inventario de cookies</h1>
+        <p>Revisión del 24 de septiembre de 2026, en Chrome, incluido un inicio de sesión de prueba. No aparecieron cookies adicionales. Primero el sitio <code>alida.health</code>; desde <code>_alida_session</code>, la aplicación <code>app.alidahealth.com</code>.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Dominio donde se carga</th>
+                <th>Nombre</th>
+                <th>Proveedor</th>
+                <th>Dominio de la cookie</th>
+                <th>Finalidad</th>
+                <th>Duración observada</th>
+                <th>Datos</th>
+                <th>Destinatario</th>
+                <th>Consentimiento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>alida.health</code></td>
+                <td><code>_ga</code></td>
+                <td>Google</td>
+                <td><code>.alida.health</code></td>
+                <td>Distinguir navegadores</td>
+                <td>400 días. Google las fija en 2 años; Chrome las acorta</td>
+                <td>Código aleatorio del navegador. Sin correo ni nombre</td>
+                <td>Google, Estados Unidos</td>
+                <td>Se puede rechazar</td>
+              </tr>
+              <tr>
+                <td><code>alida.health</code></td>
+                <td><code>_ga_*</code></td>
+                <td>Google Analytics 4</td>
+                <td><code>.alida.health</code></td>
+                <td>Recordar la visita. El asterisco es el id de medición de Google</td>
+                <td>400 días. Google las fija en 2 años; Chrome las acorta</td>
+                <td>Página, origen, navegador, idioma, pantalla y zona aproximada por IP. Sin correo ni nombre</td>
+                <td>Google, Estados Unidos</td>
+                <td>Se puede rechazar</td>
+              </tr>
+              <tr>
+                <td><code>alida.health</code></td>
+                <td><code>ph_*_posthog</code></td>
+                <td>PostHog</td>
+                <td><code>.alida.health</code></td>
+                <td>Distinguir navegadores</td>
+                <td>365 días</td>
+                <td>Código aleatorio del navegador y de la sesión, página, origen, navegador, dispositivo, IP y campaña del enlace (UTM, <code>gclid</code>, <code>fbclid</code>, <code>msclkid</code>). Sin correo ni nombre</td>
+                <td>PostHog, Estados Unidos</td>
+                <td>Se puede rechazar</td>
+              </tr>
+              <tr>
+                <td><code>alida.health</code></td>
+                <td><code>_fbp</code></td>
+                <td>Meta, píxel <code>1014209211096748</code></td>
+                <td><code>.alida.health</code></td>
+                <td>Medir campañas</td>
+                <td>90 días</td>
+                <td>Código aleatorio del navegador y página visitada. Sin correo ni nombre</td>
+                <td>Meta, Estados Unidos</td>
+                <td>Se puede rechazar</td>
+              </tr>
+              <tr>
+                <td><code>app.alidahealth.com</code></td>
+                <td><code>_alida_session</code></td>
+                <td>Alida</td>
+                <td><code>app.alidahealth.com</code> (solo ese dominio)</td>
+                <td>Mantener la sesión</td>
+                <td>Sesión del navegador. La página no puede leerla</td>
+                <td>Clave técnica de la sesión. Sin nombre ni expediente</td>
+                <td>Alida</td>
+                <td>Necesaria</td>
+              </tr>
+              <tr>
+                <td><code>app.alidahealth.com</code></td>
+                <td><code>ph_*_posthog</code></td>
+                <td>PostHog</td>
+                <td><code>.alidahealth.com</code></td>
+                <td>Distinguir navegadores. Con sesión iniciada, asociarlos a la cuenta</td>
+                <td>365 días</td>
+                <td>Código aleatorio del navegador y de la sesión. Con sesión iniciada el código pasa a ser el correo, y también se envían nombre, id de usuario e id de clínica</td>
+                <td>PostHog, Estados Unidos</td>
+                <td>Se puede rechazar</td>
+              </tr>
+              <tr>
+                <td><code>app.alidahealth.com</code></td>
+                <td><code>_fbp</code></td>
+                <td>Meta, píxel <code>1014209211096748</code></td>
+                <td><code>.alidahealth.com</code></td>
+                <td>Medir campañas</td>
+                <td>90 días</td>
+                <td>Código aleatorio del navegador y página. En el registro: inicio y alta de cuenta, y huella del correo (no legible)</td>
+                <td>Meta, Estados Unidos</td>
+                <td>Se puede rechazar</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>PostHog entre el sitio y la aplicación</h2>
+        <p>Sí los enlaza. No comparten cookie: cada dominio guarda la suya. Al hacer click en el inicio hacia la aplicación, la dirección lleva el código aleatorio del navegador y el de la sesión. La aplicación los adopta y luego los quita de la URL.</p>
+        <p>No se enlaza si la persona ya había iniciado sesión o si escribe la dirección de la aplicación. Pasadas 24 horas se conserva ese código y no la sesión.</p>
+
+        <h2>Google Analytics en areas autenticadas</h2>
+        <p>No carga en areas autenticadas. Solo se carga en <code>alida.health</code>. No se carga en <code>app.alidahealth.com</code>, ni en el inicio de sesión ni con la sesión iniciada. En la prueba no apareció su cookie. No recibe correo, nombre ni expediente.</p>
+
+        <h2>Servidores fuera de México</h2>
+        <ul>
+          <li>Amazon Web Services, Oregón (Estados Unidos): aplicación, base de datos, archivos y correo.</li>
+          <li>PostHog, Estados Unidos: medición.</li>
+          <li>Google, Estados Unidos: analítica, inicio de sesión con Google y mapas.</li>
+          <li>Meta, Estados Unidos: medición de campañas.</li>
+          <li>Stripe, Estados Unidos: pago.</li>
+          <li>Twilio, Estados Unidos: WhatsApp.</li>
+          <li>New Relic, Estados Unidos: rendimiento de la aplicación.</li>
+          <li>Cloudflare: sitio y verificación de que no es un robot.</li>
+          <li>OpenAI, Estados Unidos: resumen clínico, solo si la clínica lo activa.</li>
+        </ul>
+
+        <h2>Análisis de datos</h2>
+        <p>A futuro queremos analizar datos médicos agregados. Por ejemplo, enfermedades más frecuentes o tipos de lentes. Sin nombre, correo, teléfono ni domicilio.</p>
+        <p>Ese tipo de conteo se haría en nuestro sistema. Usar un modelo de IA no está definido. Si se usara, sería uno de un proveedor grande, como Anthropic u OpenAI.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© 2026 Alida Health. Todos los derechos reservados.</p>
+        <div class="footer-bottom-links">
+          <a href="privacy.html">Aviso de Privacidad</a>
+          <a href="terms.html">Términos y Condiciones</a>
+          <a href="inventario-cookies.html" aria-current="page">Inventario de cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js?v=7"></script>
+</body>
+</html>
