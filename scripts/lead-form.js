@@ -400,22 +400,6 @@
         openLeadDialog(button);
       });
     });
-
-    previewLeadSuccess();
-  }
-
-  function previewLeadSuccess() {
-    var preview = false;
-    try {
-      preview = new URLSearchParams(location.search).get("lead-success") === "1";
-    } catch (e) {
-      preview = false;
-    }
-    if (!preview) return;
-    var dialog = document.getElementById("contact-modal");
-    if (!dialog || typeof dialog.showModal !== "function") return;
-    showSuccess();
-    if (!dialog.open) dialog.showModal();
   }
 
   function aimLeadForm() {
