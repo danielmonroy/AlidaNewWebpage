@@ -217,6 +217,7 @@
       dialog.querySelectorAll("[data-lead-intro]").forEach(function (el) {
         el.hidden = true;
       });
+      closeDialogLater(dialog);
     }
     var success = (wrap || form).querySelector("[data-lead-success]");
     if (success) success.hidden = false;
@@ -334,6 +335,21 @@
     return dialog && !dialog.open;
   }
 
+  var SUCCESS_CLOSE_MS = 5000;
+
+  function closeDialogLater(dialog) {
+    if (dialog._alidaCloseTimer) clearTimeout(dialog._alidaCloseTimer);
+    dialog._alidaCloseTimer = setTimeout(function () {
+      dialog._alidaCloseTimer = null;
+      if (dialog.open) dialog.close();
+    }, SUCCESS_CLOSE_MS);
+  }
+
+  function successIsVisible(dialog) {
+    var success = dialog.querySelector("[data-lead-success]");
+    return success && !success.hidden;
+  }
+
   function openLeadDialog(button) {
     var dialog = document.getElementById("contact-modal");
     if (!dialog || typeof dialog.showModal !== "function") return;
@@ -344,12 +360,19 @@
       armForms([form]);
     }
     if (!dialog.open) dialog.showModal();
+    if (successIsVisible(dialog)) closeDialogLater(dialog);
     var name = form && form.querySelector("input[name='name']");
     var fields = form && form.querySelector("[data-lead-fields]");
     if (name && fields && !fields.hidden) name.focus();
   }
 
   function bindDialog(dialog) {
+    dialog.addEventListener("close", function () {
+      if (dialog._alidaCloseTimer) {
+        clearTimeout(dialog._alidaCloseTimer);
+        dialog._alidaCloseTimer = null;
+      }
+    });
     dialog.addEventListener("click", function (event) {
       if (event.target === dialog) dialog.close();
     });
