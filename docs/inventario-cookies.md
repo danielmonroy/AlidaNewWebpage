@@ -38,4 +38,4 @@ No carga en areas autenticadas. Solo se carga en `alida.health`. No se carga en 
 
 A futuro queremos analizar datos médicos agregados. Por ejemplo, enfermedades más frecuentes o tipos de lentes. Sin nombre, correo, teléfono ni domicilio.
 
-Ese tipo de conteo se haría en nuestro sistema. Usar un modelo de IA no está definido. Si se usara, sería uno de un proveedor grande, como Anthropic u OpenAI.
+Ese tipo de conteo se haría en nuestro sistema.
