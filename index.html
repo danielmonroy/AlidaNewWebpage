@@ -13,9 +13,9 @@
     gtag('config', 'G-CCYKGL0BZZ');
   </script>
 
-  <!-- PostHog: scripts/posthog-website.js. Typeform stays on the homepage — landings have no form. -->
+  <!-- PostHog: scripts/posthog-website.js. Contact modal uses the same lead form as empieza-hoy-llamada. -->
   <script src="scripts/posthog-website.js?v=4"></script>
-  <script src="scripts/typeform-posthog.js?v=1"></script>
+  <script src="scripts/lead-form.js?v=14"></script>
   <script src="scripts/signup-cta.js?v=2"></script>
 
   <!-- Meta Pixel Code (Only on production) -->
@@ -56,10 +56,7 @@
   <link rel="stylesheet" href="styles/testimonials.css?v=9">
   <link rel="stylesheet" href="styles/pricing.css?v=10">
   <link rel="stylesheet" href="styles/cta.css?v=4">
-
-  <!-- Typeform popup embed -->
-  <link rel="stylesheet" href="//embed.typeform.com/next/css/popup.css">
-  <script src="//embed.typeform.com/next/embed.js" async></script>
+  <link rel="stylesheet" href="styles/contact-modal.css?v=4">
 </head>
 <body>
 
@@ -124,16 +121,7 @@
           </div>
           <div class="hero-action-group">
             <p>¿Necesitas más información?</p>
-            <button type="button"
-                    data-tf-popup="V2Njuf39"
-                    data-tf-opacity="100"
-                    data-tf-size="80"
-                    data-tf-auto-close="5000"
-                    data-tf-iframe-props="title=Contacto Alida Health"
-                    data-tf-transitive-search-params
-                    data-tf-hidden="source=hero_cta"
-                    data-tf-medium="snippet"
-                    class="btn btn-outline-light btn-lg">Ponte en contacto con nosotros</button>
+            <button type="button" data-lead-open="hero_cta" class="btn btn-outline-light btn-lg">Ponte en contacto con nosotros</button>
           </div>
         </div>
       </div>
@@ -673,16 +661,7 @@
               <div class="pricing-feature"><span class="pf-check blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Portal de pacientes</div>
               <div class="pricing-feature"><span class="pf-check blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Auditoría</div>
             </div>
-            <button type="button"
-                    data-tf-popup="V2Njuf39"
-                    data-tf-opacity="100"
-                    data-tf-size="80"
-                    data-tf-auto-close="5000"
-                    data-tf-iframe-props="title=Contacto Alida Health"
-                    data-tf-transitive-search-params
-                    data-tf-hidden="source=pricing_empresa"
-                    data-tf-medium="snippet"
-                    class="btn btn-primary">Hablar con Ventas</button>
+            <button type="button" data-lead-open="pricing_empresa" class="btn btn-primary">Hablar con Ventas</button>
           </div>
         </div>
       </div>
@@ -758,16 +737,7 @@
           <p class="reveal reveal-delay-2">Agenda una demo personalizada y descubre cómo Alida Health puede optimizar tu consultorio, clínica u hospital.</p>
 
           <div class="cta-form reveal reveal-delay-3">
-            <button type="button"
-                    data-tf-popup="V2Njuf39"
-                    data-tf-opacity="100"
-                    data-tf-size="80"
-                    data-tf-auto-close="5000"
-                    data-tf-iframe-props="title=Contacto Alida Health"
-                    data-tf-transitive-search-params
-                    data-tf-hidden="source=final_cta"
-                    data-tf-medium="snippet"
-                    class="btn btn-primary">
+            <button type="button" data-lead-open="final_cta" class="btn btn-primary">
               Solicitar Demo
             </button>
           </div>
@@ -794,6 +764,38 @@
       </div>
     </div>
   </footer>
+
+  <dialog id="contact-modal" class="contact-modal" aria-labelledby="contact-modal-title">
+    <button type="button" class="contact-modal-close" data-contact-close aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7 2.9 18.3 9.2 12 2.9 5.7 4.3 4.3l6.3 6.3 6.3-6.3z"/></svg>
+    </button>
+    <h2 id="contact-modal-title" data-lead-intro>Ponte en contacto</h2>
+    <p class="contact-modal-lead" data-lead-intro>Déjanos tu nombre, teléfono y correo. Te contactamos en menos de 24 horas.</p>
+    <form class="contact-modal-form" data-lead-form data-lead-theme="light" data-lead-landing="homepage">
+      <div data-lead-fields>
+        <label>
+          Nombre
+          <input type="text" name="name" autocomplete="name" required maxlength="120" placeholder="Tu nombre">
+        </label>
+        <label>
+          Teléfono
+          <input type="tel" name="phone" inputmode="tel" autocomplete="tel" required maxlength="40" placeholder="55 1234 5678">
+        </label>
+        <label>
+          Correo
+          <input type="email" name="email" autocomplete="email" required maxlength="255" placeholder="tu@correo.com">
+        </label>
+        <div data-lead-captcha></div>
+        <p data-lead-error hidden></p>
+        <button type="submit" class="btn btn-primary btn-lg">Quiero que me contacten</button>
+      </div>
+      <div class="contact-modal-success" data-lead-success hidden>
+        <strong>Listo</strong>
+        <p>Te contactaremos en menos de 24 horas.</p>
+      </div>
+      <p class="contact-modal-privacy">Usaremos tus datos para contactarte. <a href="privacy.html">Aviso de Privacidad</a>.</p>
+    </form>
+  </dialog>
 
   <script src="scripts/hero-dots.js?v=7"></script>
   <script src="scripts/main.js?v=8"></script>
