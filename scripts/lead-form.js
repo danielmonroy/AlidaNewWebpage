@@ -1,5 +1,6 @@
 /* Marketing lead form: POST /marketing/leads. No PII to PostHog from the page.
-   lead_form_started fires once on first field focus or nav tap to #lead-form. */
+   lead_form_started fires once, on first field focus, a tap to #lead-form, or opening the homepage dialog.
+   The bot check loads with an inline form, and on the homepage only when the dialog opens. */
 (function () {
   var LOCAL_HOSTS = ["localhost", "127.0.0.1"];
   var formStarted = false;
@@ -26,15 +27,20 @@
     return "https://app.alidahealth.com/marketing/leads";
   }
 
-  function landingSlug() {
+  function landingSlug(form) {
+    var fromForm = form && form.getAttribute("data-lead-landing");
+    if (fromForm && fromForm.trim()) return fromForm.trim();
     return (window.alidaExperiment && window.alidaExperiment.slug) || "empieza-hoy-llamada";
   }
 
-  function captureFormStarted() {
+  function captureFormStarted(form) {
     if (formStarted) return;
     formStarted = true;
     if (typeof posthog === "undefined") return;
-    posthog.capture("lead_form_started", { landing: landingSlug() });
+    var props = { landing: landingSlug(form) };
+    var source = form && form._alidaSource;
+    if (source) props.source = source;
+    posthog.capture("lead_form_started", props);
   }
 
   function referralCode(form) {
@@ -137,7 +143,7 @@
       name: (form.elements.name && form.elements.name.value) || "",
       phone: (form.elements.phone && form.elements.phone.value) || "",
       email: (form.elements.email && form.elements.email.value) || "",
-      landing: landingSlug(),
+      landing: landingSlug(form),
       referral_code: referralCode(form)
     };
     var token = captchaToken(form);
@@ -206,6 +212,12 @@
       var lead = wrap.querySelector(".lp-form-lead");
       if (lead) lead.hidden = true;
     }
+    var dialog = form.closest("dialog");
+    if (dialog) {
+      dialog.querySelectorAll("[data-lead-intro]").forEach(function (el) {
+        el.hidden = true;
+      });
+    }
     var success = (wrap || form).querySelector("[data-lead-success]");
     if (success) success.hidden = false;
     var button = form.querySelector("[type='submit']");
@@ -241,15 +253,57 @@
     });
   }
 
-  function bindForm(form, siteKey) {
-    if (siteKey && !mountCaptcha(form, siteKey)) {
-      showError(form, "No se pudo cargar la verificación. Recarga la página.");
-    }
+  var captchaConfigPromise = null;
 
+  function captchaConfig() {
+    if (!captchaConfigPromise) captchaConfigPromise = fetchCaptchaConfigWithRetry();
+    return captchaConfigPromise;
+  }
+
+  function armForms(forms) {
+    var pending = [];
+    var waits = [];
+    forms.forEach(function (form) {
+      if (form._alidaCaptchaReady) {
+        waits.push(form._alidaCaptchaReady);
+        return;
+      }
+      pending.push(form);
+    });
+    if (!pending.length) return Promise.all(waits);
+
+    var job = captchaConfig()
+      .then(function (config) {
+        var siteKey = config && config.enabled ? config.site_key : "";
+        var ready = siteKey ? loadTurnstile() : Promise.resolve();
+        return ready.then(function () {
+          pending.forEach(function (form) {
+            form._alidaSiteKey = siteKey;
+            if (siteKey && !mountCaptcha(form, siteKey)) {
+              showError(form, "No se pudo cargar la verificación. Recarga la página.");
+            }
+          });
+        });
+      })
+      .catch(function () {
+        pending.forEach(function (form) {
+          form._alidaSiteKey = "";
+          showError(form, "No se pudo cargar la verificación. Recarga la página.");
+        });
+      });
+
+    pending.forEach(function (form) {
+      form._alidaCaptchaReady = job;
+    });
+    waits.push(job);
+    return Promise.all(waits);
+  }
+
+  function bindForm(form) {
     form.addEventListener("focusin", function (event) {
       var tag = event.target && event.target.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") {
-        captureFormStarted();
+        captureFormStarted(form);
       }
     });
 
@@ -260,42 +314,75 @@
       var button = form.querySelector("[type='submit']");
       if (button) button.disabled = true;
 
-      var ready = siteKey ? waitForCaptchaToken(form) : Promise.resolve("");
-      ready.then(function (token) {
-        if (siteKey && !token) {
-          showError(form, "Completa la verificación para continuar.");
-          if (button) button.disabled = false;
-          return;
-        }
-        postLead(form, button);
+      armForms([form]).then(function () {
+        var siteKey = form._alidaSiteKey || "";
+        var ready = siteKey ? waitForCaptchaToken(form) : Promise.resolve("");
+        ready.then(function (token) {
+          if (siteKey && !token) {
+            showError(form, "Completa la verificación para continuar.");
+            if (button) button.disabled = false;
+            return;
+          }
+          postLead(form, button);
+        });
+      });
+    });
+  }
+
+  function formInClosedDialog(form) {
+    var dialog = form.closest("dialog");
+    return dialog && !dialog.open;
+  }
+
+  function openLeadDialog(button) {
+    var dialog = document.getElementById("contact-modal");
+    if (!dialog || typeof dialog.showModal !== "function") return;
+    var form = dialog.querySelector("[data-lead-form]");
+    if (form) {
+      form._alidaSource = button.getAttribute("data-lead-open") || "";
+      captureFormStarted(form);
+      armForms([form]);
+    }
+    if (!dialog.open) dialog.showModal();
+    var name = form && form.querySelector("input[name='name']");
+    var fields = form && form.querySelector("[data-lead-fields]");
+    if (name && fields && !fields.hidden) name.focus();
+  }
+
+  function bindDialog(dialog) {
+    dialog.addEventListener("click", function (event) {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.querySelectorAll("[data-contact-close]").forEach(function (closer) {
+      closer.addEventListener("click", function () {
+        dialog.close();
       });
     });
   }
 
   function init() {
     var forms = document.querySelectorAll("[data-lead-form]");
-    if (!forms.length) return;
+    var immediate = [];
+    forms.forEach(function (form) {
+      bindForm(form);
+      if (!formInClosedDialog(form)) immediate.push(form);
+    });
+    if (immediate.length) armForms(immediate);
 
-    fetchCaptchaConfigWithRetry()
-      .then(function (config) {
-        var siteKey = config && config.enabled ? config.site_key : "";
-        var ready = siteKey ? loadTurnstile() : Promise.resolve();
-        return ready.then(function () {
-          forms.forEach(function (form) { bindForm(form, siteKey); });
-        });
-      })
-      .catch(function () {
-        forms.forEach(function (form) {
-          bindForm(form, "");
-          showError(form, "No se pudo cargar la verificación. Recarga la página.");
-        });
+    var dialog = document.getElementById("contact-modal");
+    if (dialog) bindDialog(dialog);
+
+    document.querySelectorAll("[data-lead-open]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        openLeadDialog(button);
       });
+    });
   }
 
   function aimLeadForm() {
     var wrap = document.getElementById("lead-form");
     if (!wrap || wrap.classList.contains("is-sent")) return;
-    captureFormStarted();
+    captureFormStarted(wrap.querySelector("[data-lead-form]"));
 
     wrap.classList.add("is-aimed");
     var name = wrap.querySelector("input[name='name']");

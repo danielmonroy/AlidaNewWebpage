@@ -1,0 +1,128 @@
+.contact-modal {
+  width: min(28rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  margin: auto;
+  padding: 1.5rem 1.35rem 1.15rem;
+  border: 0;
+  border-radius: 16px;
+  outline: none;
+  background: var(--surface-primary);
+  color: var(--color-gray-700);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+}
+
+.contact-modal:focus,
+.contact-modal:focus-visible {
+  outline: none;
+}
+
+.contact-modal::backdrop {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.contact-modal-close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-gray-500);
+  cursor: pointer;
+}
+
+.contact-modal-close:hover {
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+}
+
+.contact-modal h2 {
+  margin: 0 2rem 0.4rem 0;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+.contact-modal-lead {
+  margin: 0 0 1rem;
+  color: var(--color-gray-500);
+  line-height: 1.45;
+}
+
+.contact-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.contact-modal-form [data-lead-fields] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.contact-modal-form [data-lead-fields][hidden],
+.contact-modal-success[hidden] {
+  display: none;
+}
+
+.contact-modal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.contact-modal-form input {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color-hover);
+  background: var(--surface-primary);
+  color: var(--color-black);
+  font-size: 0.9375rem;
+}
+
+.contact-modal-form input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.contact-modal-form .btn-lg {
+  width: 100%;
+}
+
+.contact-modal-form [data-lead-error] {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #b42318;
+}
+
+.contact-modal-success strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 1.25rem;
+}
+
+.contact-modal-success p,
+.contact-modal-privacy {
+  margin: 0;
+  color: var(--color-gray-500);
+  line-height: 1.45;
+}
+
+.contact-modal-privacy {
+  font-size: 0.75rem;
+}
+
+.contact-modal-privacy a {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-decoration: underline;
+}
