@@ -96,7 +96,7 @@ window.ALIDA_APRENDE_VIDEOS = [
     slug: "programa-de-referidos",
     title: "Programa de referidos",
     summary: "Comparte Alida y recibe beneficios por tus referidos.",
-    youtubeId: "jNQXAC9IVRw",
+    youtubeId: "cNi-RGaBrt4",
     category: "Referidos",
     popular: true,
     faq: [
