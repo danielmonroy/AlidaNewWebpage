@@ -1,95 +1,60 @@
 window.ALIDA_APRENDE_VIDEOS = [
   {
-    slug: "agenda",
-    title: "Agendar una consulta",
-    summary: "Crea, mueve y confirma consultas en la agenda.",
-    youtubeId: "aqz-KE-bpKQ",
-    category: "Consultas",
-    popular: true,
-    faq: [
-      { q: "¿Puedo ver la agenda de varios médicos?", a: "Sí. Filtra por médico o consultorio y ves el día de cada quien." }
-    ]
-  },
-  {
-    slug: "expediente",
-    title: "Llenar el expediente",
-    summary: "Registra la consulta, antecedentes y notas oftalmológicas.",
-    youtubeId: "eRsGyueVLvQ",
-    category: "Consultas",
-    popular: true,
-    faq: [
-      { q: "¿El expediente sirve para oftalmología?", a: "Sí. Está hecho para el flujo de la consulta: agudeza, biomicroscopía, fondo, plan." }
-    ]
-  },
-  {
-    slug: "receta",
-    title: "Hacer una receta",
-    summary: "Genera e imprime la receta con los datos del médico.",
-    youtubeId: "jNQXAC9IVRw",
-    category: "Consultas",
-    popular: true,
-    faq: [
-      { q: "¿Puedo enviar la receta por WhatsApp?", a: "Sí. La imprimes o la compartes desde la consulta, con membrete y cédula." }
-    ]
-  },
-  {
-    slug: "estudios",
-    title: "Subir estudios",
-    summary: "Adjunta estudios e imágenes junto al expediente del paciente.",
-    youtubeId: "M7lc1UVf-VE",
-    category: "Estudios",
-    faq: [
-      { q: "¿Qué archivos puedo subir?", a: "PDF e imágenes. Quedan en el expediente para la siguiente consulta." }
-    ]
-  },
-  {
-    slug: "cirugia",
-    title: "Programar una cirugía",
-    summary: "Arma el plan quirúrgico, documentos y la fecha en quirófano.",
-    youtubeId: "LXb3EKWsInQ",
-    category: "Cirugía",
-    faq: [
-      { q: "¿Puedo imprimir el paquete preoperatorio?", a: "Sí. Se arma desde el módulo de cirugía, con los documentos de esa intervención." }
-    ]
-  },
-  {
-    slug: "configurar-clinica",
-    title: "Configurar el consultorio",
-    summary: "Nombre, horarios y datos de contacto de tu consultorio.",
-    youtubeId: "hY7m5jjJ9mM",
+    slug: "agregar-asistente-o-administrativo",
+    title: "Agregar un asistente o administrativo",
+    summary: "Crea la cuenta, elige Asistente o Administrativo, y asígnala a una sucursal y un departamento.",
+    youtubeId: "6ddGgaOwf0s",
     category: "Consultorio",
+    popular: true,
     faq: [
-      { q: "¿Quién puede cambiar esto?", a: "Quien administre el consultorio. El resto del equipo sigue atendiendo con normalidad." }
-    ]
-  },
-  {
-    slug: "usuarios",
-    title: "Agregar a tu equipo",
-    summary: "Invita a asistentes o médicos y define qué puede ver cada quien.",
-    youtubeId: "R6MlUcmOul8",
-    category: "Consultorio",
-    faq: [
-      { q: "¿Puedo quitar el acceso sin borrar datos?", a: "Sí. Se cierra el acceso y el historial del consultorio se queda." }
-    ]
-  },
-  {
-    slug: "lentes",
-    title: "Receta de lentes",
-    summary: "Captura la graduación e imprime la receta óptica.",
-    youtubeId: "QH2-TGUlwu4",
-    category: "Consultas",
-    faq: [
-      { q: "¿Puedo anotar distancia pupilar?", a: "Sí. Registras los valores que uses en consulta y salen en la receta." }
-    ]
-  },
-  {
-    slug: "agenda-publica",
-    title: "Agenda en línea",
-    summary: "Comparte el enlace de tu consultorio para que el paciente agende solo.",
-    youtubeId: "C0DPdy98e4c",
-    category: "Pacientes",
-    faq: [
-      { q: "¿Puedo apagar la agenda en línea?", a: "Sí, cuando quieras, desde la configuración del consultorio." }
+      {
+        q: "¿Por qué no veo la pestaña Usuarios?",
+        a: "Solo la ve el propietario de la clínica. Si entraste con otra cuenta, pídele que cree al usuario."
+      },
+      {
+        q: "¿Por qué no puedo dar clic en Crear Usuario?",
+        a: "No quedan asientos de doctor ni asientos para asistentes y administrativos. Para agregar a alguien más, contacta para aumentar tu plan."
+      },
+      {
+        q: "¿Cómo agrego personal administrativo?",
+        a: "En el mismo formulario. Elige Administrativo en lugar de Asistente. Usan los mismos asientos."
+      },
+      {
+        q: "¿Por qué no puedo elegir Asistente o Administrativo?",
+        a: "Ya no quedan asientos para esos roles. Asistente, administrativo y optometrista los comparten. Puedes tener asientos de doctor libres y, aun así, ver estos roles bloqueados."
+      },
+      {
+        q: "¿El optometrista se crea igual?",
+        a: "El rol sí se elige en este mismo formulario. La cédula profesional, la universidad y el título en la receta médica se llenan después, en su perfil. Este video no cubre ese paso."
+      },
+      {
+        q: "¿Por qué no me deja crear al usuario, o no veo los departamentos?",
+        a: "Primero marca al menos una sucursal. Los departamentos aparecen después y tienen que ser de esa sucursal. Si la sucursal no tiene departamentos, no puedes crear al usuario con ella."
+      },
+      {
+        q: "¿Puedo asignarlo a varias sucursales o departamentos?",
+        a: "Sí. Marca al menos una sucursal y un departamento."
+      },
+      {
+        q: "¿Qué correos recibe y con qué contraseña entra?",
+        a: "Le llegan dos correos, \"¡Bienvenido(a) a Alida!\" e \"Instrucciones de cambio de contraseña\". Entra con el correo y la contraseña del formulario, aunque todavía no confirme el correo. Si abre el enlace para cambiarla, esa nueva contraseña reemplaza la anterior."
+      },
+      {
+        q: "¿Por qué dice que el correo ya está en uso?",
+        a: "Ese correo ya pertenece a otra cuenta. En Alida cada correo se usa una sola vez, no solo dentro de tu clínica."
+      },
+      {
+        q: "¿Por qué no acepta la contraseña?",
+        a: "Tiene que tener al menos 6 caracteres y coincidir en los dos campos."
+      },
+      {
+        q: "¿Qué pasa si no elijo un rol?",
+        a: "No se guarda y aparece el mensaje \"Debes seleccionar un rol\"."
+      },
+      {
+        q: "¿Por qué me pide usuario y PIN?",
+        a: "Tu clínica tiene inicio de sesión con PIN. Escribe un usuario y un PIN de 4 dígitos. Ese usuario no se puede repetir dentro de la clínica."
+      }
     ]
   },
   {
@@ -136,4 +101,4 @@ window.ALIDA_APRENDE_VIDEOS = [
   }
 ];
 
-window.ALIDA_APRENDE_TOPICS = ["Pacientes", "Consultas", "Estudios", "Cirugía", "Consultorio", "Referidos"];
+window.ALIDA_APRENDE_TOPICS = ["Consultorio", "Referidos"];
