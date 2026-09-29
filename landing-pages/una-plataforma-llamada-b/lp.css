@@ -210,6 +210,18 @@
   text-align: left;
 }
 
+.lp-label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.15rem;
+}
+
+.lp-required {
+  color: #b42318;
+  font-weight: 700;
+  line-height: 1;
+}
+
 .lp-lead-form input {
   width: 100%;
   min-width: 0;
