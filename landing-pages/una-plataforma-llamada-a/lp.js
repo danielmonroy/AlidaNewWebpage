@@ -68,4 +68,35 @@
 
   bind(document.querySelector(".lp-demo-points"), document.querySelector(".lp-points-nav"), 1);
   bind(document.querySelector(".lp-quotes"), document.querySelector(".lp-quotes-nav"), 1);
+
+  document.querySelectorAll("[data-lead-form]").forEach(function (form) {
+    var phone = form.elements.phone;
+    var email = form.elements.email;
+    if (!phone || !email) return;
+
+    form.addEventListener("submit", function (event) {
+      var phoneValue = phone.value.trim();
+      var emailValue = email.value.trim();
+      var error = form.querySelector("[data-lead-error]");
+
+      if (!phoneValue && !emailValue) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        if (error) {
+          error.hidden = false;
+          error.textContent = "Deja un teléfono o un correo para que te contactemos.";
+        }
+        var button = form.querySelector("[type='submit']");
+        if (button) button.disabled = false;
+        return;
+      }
+
+      if (error) {
+        error.hidden = true;
+        error.textContent = "";
+      }
+      if (!phoneValue) phone.value = "N/A";
+      if (!emailValue) email.value = "sin-correo@alida.health";
+    }, true);
+  });
 })();
