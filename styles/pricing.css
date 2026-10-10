@@ -159,6 +159,17 @@
   letter-spacing: -0.02em;
 }
 
+.pricing-price:has(+ .pricing-offer) {
+  margin-bottom: var(--space-3);
+}
+
+.pricing-offer {
+  margin: 0 0 var(--space-8);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--color-gray-700);
+}
+
 .pricing-features {
   display: flex;
   flex-direction: column;
@@ -205,10 +216,10 @@
   margin-top: auto;
 }
 
-/* 2 cards centered layout */
+/* 1 card centered layout */
 #tab-personal {
-  grid-template-columns: repeat(2, 1fr);
-  max-width: 800px;
+  grid-template-columns: 1fr;
+  max-width: 420px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -286,39 +297,7 @@
     font-size: 13px;
   }
 
-  /* ── Mobile Carousel for Personal Tab ── */
-  #tab-personal {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    /* Break out of container to allow full bleed scrolling */
-    width: 100vw;
-    margin-left: -50vw;
-    left: 50%;
-    position: relative;
-    padding: 10px 24px 30px 24px;
-    gap: 16px;
-    max-width: none;
-    align-items: stretch; /* Make both cards the same height */
-  }
-
-  /* Hide scrollbar */
-  #tab-personal::-webkit-scrollbar { display: none; }
-  #tab-personal { -ms-overflow-style: none; scrollbar-width: none; }
-
-  #tab-personal .pricing-card {
-    flex: 0 0 85vw;
-    max-width: 320px;
-    scroll-snap-align: center;
-  }
-
-  /* Revert order so Básica is first, Pro is second */
-  #tab-personal .pricing-card.featured {
-    order: 0;
-  }
-
+  #tab-personal,
   #tab-empresa {
     max-width: 100%;
     padding: 0 24px;
