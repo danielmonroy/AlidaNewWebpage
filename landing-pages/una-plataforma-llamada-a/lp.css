@@ -79,6 +79,11 @@
   text-align: left;
 }
 
+.lp-hero .hero-subtitle .lp-demo-mark {
+  font-weight: 700;
+  white-space: normal;
+}
+
 .lp-pain,
 .lp-unite {
   max-width: 32rem;
