@@ -1,5 +1,6 @@
-/* Website PostHog: $pageview plus explicit events only.
-   environment is production only on alida.health / www.
+/* Website PostHog: $pageview, $pageleave, and explicit events.
+   Page leave is on for the homepage and every landing so bounce rate
+   and session duration are real. environment is production only on alida.health / www.
    Experiment keys are registered only when window.alidaExperiment is set
    before this file runs, and always cleared first so a prior landing
    does not tag the homepage. Session replay is on for production landings.
@@ -39,7 +40,7 @@
     person_profiles: "identified_only",
     autocapture: false,
     capture_pageview: true,
-    capture_pageleave: false,
+    capture_pageleave: true,
     capture_dead_clicks: false,
     rageclick: false,
     disable_session_recording: !(isProd && isLandingPage),
